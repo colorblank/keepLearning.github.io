@@ -1,0 +1,213 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Python科学计算库 - keepLearning.github.io
+  
+  </title>
+ <meta name="description" content="机器学习、计算机视觉、Python">
+ <link href="atom.xml" rel="alternate" title="keepLearning.github.io" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+    <script src="asset/highlightjs/highlight.pack.js"></script>
+    <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+<div id="header">
+    <h1><a href="index.html">keepLearning.github.io</a></h1>
+</div>
+
+</nav>
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; keepLearning.github.io</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+      <li><a href="index.html">Home</a></li>
+      
+        <li class="divider"></li>
+        <li><label>ML算法</label></li>
+
+          
+            <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>opencv库</label></li>
+
+          
+            <li><a title="Opencv" href="14923051652150.html">Opencv</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>Python科学计算库</label></li>
+
+          
+            <li><a title="Python科学计算库" href="14904262679967.html">Python科学计算库</a></li>
+          
+
+      
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+        <section id="main-content" role="main" class="scroll-container">
+
+          <div class="row">
+            <div class="large-3 medium-3 columns">
+              <div class="hide-for-small">
+                <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+
+                    
+                      <li class="side-title"><span>ML算法</span></li>
+                        
+                          <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>opencv库</span></li>
+                        
+                          <li><a title="Opencv" href="14923051652150.html">Opencv</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>Python科学计算库</span></li>
+                        
+                          <li><a title="Python科学计算库" href="14904262679967.html">Python科学计算库</a></li>
+                        
+
+                    
+                  </ul>
+                </nav>
+                </div>
+              </div>
+            </div>
+            <div class="large-9 medium-9 columns">
+
+ 
+
+
+	
+		<div class="markdown-body">
+		<h1>Python科学计算库</h1>
+
+		<h2 id="toc_0">numpy常见函数</h2>
+
+<h3 id="toc_1">tile函数</h3>
+
+<ul>
+<li><p>Parameters（参数）</p>
+
+<p>A : array_like<br/>
+    The input array.<br/>
+    输入参数是数组</p>
+
+<p>reps : array_like<br/>
+    The number of repetitions of <code>A</code> along each axis.<br/>
+    重复reps次</p></li>
+<li><p>Returns<br/>
+c : ndarray<br/>
+    The tiled output array.</p></li>
+<li><p>Examples</p>
+
+<hr/>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a = np.array([0, 1, 2])<br/>
+np.tile(a, 2)<br/>
+array([0, 1, 2, 0, 1, 2])<br/>
+<mark>数组a的内容重复2次</mark><br/>
+np.tile(a, (2, 2))<br/>
+array([[0, 1, 2, 0, 1, 2],<br/>
+       [0, 1, 2, 0, 1, 2]])<br/>
+       <mark>数组a的内容在行方向上重复2次，列方向上重复2次</mark><br/>
+np.tile(a, (2, 1, 2))<br/>
+array([[[0, 1, 2, 0, 1, 2]],<br/>
+       [[0, 1, 2, 0, 1, 2]]])<br/>
+       <mark>可在三维上重复</mark><br/>
+b = np.array([[1, 2], [3, 4]])<br/>
+np.tile(b, 2)<br/>
+array([[1, 2, 1, 2],<br/>
+       [3, 4, 3, 4]])<br/>
+np.tile(b, (2, 1))<br/>
+array([[1, 2],<br/>
+       [3, 4],<br/>
+       [1, 2],<br/>
+       [3, 4]])<br/>
+c = np.array([1,2,3,4])<br/>
+np.tile(c,(4,1))<br/>
+array([[1, 2, 3, 4],<br/>
+       [1, 2, 3, 4],<br/>
+       [1, 2, 3, 4],<br/>
+       [1, 2, 3, 4]])</p>
+</blockquote>
+</blockquote>
+</blockquote></li>
+</ul>
+
+
+		</div>
+	
+
+  
+  
+</div></div>
+
+
+<div class="page-bottom">
+  <div class="row">
+  <hr />
+  <div class="small-9 columns">
+  <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+  <div class="small-3 columns">
+  <p class="copyright text-right"><a href="#header">TOP</a></p>
+  </div>
+   
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+    
+    
+    <script src="asset/js/foundation.min.js"></script>
+    <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+    <script>
+      $(document).foundation();
+
+     
+    </script>
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+  </body>
+</html>

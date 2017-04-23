@@ -1,0 +1,244 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  keepLearning.github.io
+  
+  </title>
+ <meta name="description" content="机器学习、计算机视觉、Python">
+ <link href="atom.xml" rel="alternate" title="keepLearning.github.io" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+    <script src="asset/highlightjs/highlight.pack.js"></script>
+    <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+<div id="header">
+    <h1><a href="index.html">keepLearning.github.io</a></h1>
+</div>
+
+</nav>
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; keepLearning.github.io</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+      <li><a href="index.html">Home</a></li>
+      
+        <li class="divider"></li>
+        <li><label>ML算法</label></li>
+
+          
+            <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>opencv库</label></li>
+
+          
+            <li><a title="Opencv" href="14923051652150.html">Opencv</a></li>
+          
+
+      
+        <li class="divider"></li>
+        <li><label>Python科学计算库</label></li>
+
+          
+            <li><a title="Python科学计算库" href="14904262679967.html">Python科学计算库</a></li>
+          
+
+      
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+        <section id="main-content" role="main" class="scroll-container">
+
+          <div class="row">
+            <div class="large-3 medium-3 columns">
+              <div class="hide-for-small">
+                <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+
+                    
+                      <li class="side-title"><span>ML算法</span></li>
+                        
+                          <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>opencv库</span></li>
+                        
+                          <li><a title="Opencv" href="14923051652150.html">Opencv</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>Python科学计算库</span></li>
+                        
+                          <li><a title="Python科学计算库" href="14904262679967.html">Python科学计算库</a></li>
+                        
+
+                    
+                  </ul>
+                </nav>
+                </div>
+              </div>
+            </div>
+            <div class="large-9 medium-9 columns">
+
+ 
+
+
+	
+		<div class="markdown-body">
+		<h1>线性分类器 linear classify</h1>
+
+		<h2 id="toc_0">原理</h2>
+
+<h3 id="toc_1">k近邻算法</h3>
+
+<p>k近邻算法属于监督学习的范围，即通过输入参数和训练样本的“比较”，对输入的参数进行分类。<br/>
+ 举个现实的例子，给《非诚勿扰》的女嘉宾打分。打分必须有一个标准，例如以肤色、身高两个为标准进行打分。而怎样的肤色和身高才算漂亮？<br/>
+ 首先，我们将肤色设置为从 1 到 10的级别，对应现实中从白到黑的肤色等级，身高也是类似；然后我们就必须给定一个根据肤色和身高对应的漂亮级别，如：A级美女（最漂亮的）、B级美女...这就形成了，肤色、身高、美丽级数这样的三个属性的表，而且表中有很很多已知参数，类似下表。</p>
+
+<table>
+<thead>
+<tr>
+<th>肤色</th>
+<th>身高</th>
+<th>美丽级数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>3</td>
+<td>165</td>
+<td>A</td>
+</tr>
+<tr>
+<td>6</td>
+<td>170</td>
+<td>B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>160</td>
+<td>A</td>
+</tr>
+<tr>
+<td>5</td>
+<td>179</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+
+<p>最终，根据评分的标准，将某一个女嘉宾的数据输入，得到距离女嘉宾数据最近的美丽等级。由于女嘉宾数据并不一定和表中数据完全相同，且上述表只是参考，我们提出一个划分范围（即k）。根据k的取值，我们得出的结果有可能不同。<br/>
+ 即女嘉宾甲处在A级美女和B级美女的交接处，如果k=1，那么她可能归为A级，但k=2,她可能归为B级。<br/>
+因此，在实际应用中，k的取值往往需要不断试验得出。</p>
+
+<h3 id="toc_2">代码</h3>
+
+<ul>
+<li>第一个分类器函数</li>
+</ul>
+
+<pre><code class="language-python">def classify0(inX, dataSet, labels, k):
+    #inX是用于分类的输入向量(即未知量)
+    #dataSet是输入的训练样本集
+    #labels是标签向量（返回值在标签向量中选择)
+    #k是用于选择最近邻居的数目
+    dataSetSize = dataSet.shape[0]
+
+#shape[0]返回数组的行数
+    diffMat = tile(inX, (dataSetSize,1)) - dataSet
+
+#将inX扩充为和训练样本数组相同大小
+    sqDiffMat = diffMat**2
+    sqDistances = sqDiffMat.sum(axis=1)
+    #sum(axis = 1)返回每一行的和
+    distances = sqDistances**0.5
+    sortedDistIndicies = distances.argsort()   
+    #返回的是数组值从小到大的索引值,是数组类型的
+    classCount={}
+    #生成一个字典          
+    for i in range(k):
+        voteIlabel = labels[sortedDistIndicies[i]]
+        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
+#dict.get(key, default=None)
+#返回指定键的值，如果值不在字典中返回default值
+#在前k个最近的数据点中，对应标签的内容和数目，即距离输入量最近的类别A,类别B等的数目
+    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    #根据字典内值得大小对字典进行排序，reverse=True是降序
+    return sortedClassCount[0][0]
+</code></pre>
+
+
+		</div>
+	
+
+ 
+	
+
+ 
+	
+
+  
+  
+</div></div>
+
+
+<div class="page-bottom">
+  <div class="row">
+  <hr />
+  <div class="small-9 columns">
+  <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+  <div class="small-3 columns">
+  <p class="copyright text-right"><a href="#header">TOP</a></p>
+  </div>
+   
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+    
+    
+    <script src="asset/js/foundation.min.js"></script>
+    <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+    <script>
+      $(document).foundation();
+
+     
+    </script>
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+  </body>
+</html>
