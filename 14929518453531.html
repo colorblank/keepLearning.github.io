@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - keepLearning.github.io
+  Matplotlib by Example - keepLearning.github.io
   
   </title>
  <meta name="description" content="机器学习、计算机视觉、Python">
@@ -126,90 +126,71 @@
             <div class="large-9 medium-9 columns">
 
  <div class="markdown-body">
-	
-		 
-		  	<h2>2017</h2>
-		
-		
-			<div>
-				<h3><a href="14930173812526.html">Matplotlib 入门</a></h3>
-				<p>
-					<time datetime="2017-04-24T15:03:01+08:00" pubdate><span class='month'>4月</span> <span class='day'>24</span> <span class='year'>2017</span></time>
-					&nbsp;&nbsp;
-				  <span class="categories">posted in 
-				  
-					    <a class='category' href='matplotlib.html'>matplotlib</a>&nbsp;
-				   
-				  </span>
+<h1>Matplotlib by Example</h1>
 
-				</p>
-			</div>
- 	
-		
-		
-			<div>
-				<h3><a href="14929518453531.html">Matplotlib by Example</a></h3>
-				<p>
-					<time datetime="2017-04-23T20:50:45+08:00" pubdate><span class='month'>4月</span> <span class='day'>23</span> <span class='year'>2017</span></time>
-					&nbsp;&nbsp;
-				  <span class="categories">posted in 
-				  
-					    <a class='category' href='matplotlib.html'>matplotlib</a>&nbsp;
-				   
-				  </span>
+<h2 id="toc_0">实例</h2>
 
-				</p>
-			</div>
- 	
-		
-		
-			<div>
-				<h3><a href="14928433858430.html">线性分类器 linear classify</a></h3>
-				<p>
-					<time datetime="2017-04-22T14:43:05+08:00" pubdate><span class='month'>4月</span> <span class='day'>22</span> <span class='year'>2017</span></time>
-					&nbsp;&nbsp;
-				  <span class="categories">posted in 
-				  
-					    <a class='category' href='ML%E7%AE%97%E6%B3%95.html'>ML算法</a>&nbsp;
-				   
-				  </span>
+<h3 id="toc_1">画圆</h3>
 
-				</p>
-			</div>
- 	
-		
-		
-			<div>
-				<h3><a href="14923051652150.html">Opencv</a></h3>
-				<p>
-					<time datetime="2017-04-16T09:12:45+08:00" pubdate><span class='month'>4月</span> <span class='day'>16</span> <span class='year'>2017</span></time>
-					&nbsp;&nbsp;
-				  <span class="categories">posted in 
-				  
-					    <a class='category' href='opencv%E5%BA%93.html'>opencv库</a>&nbsp;
-				   
-				  </span>
+<pre><code class="language-Python">import matplotlib.pyplot as plt
+circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
+#产生一个原点为（2，1.6），半径为1的圆
+circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
+#产生一个原点为（2，1.6），半径为2的圆
+plt.gca().add_patch(circle1)
+#将圆1添加到坐标轴上
+plt.gca().add_patch(circle2)
+plt.axis(&#39;scaled&#39;)
+#等比例缩放
+plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
+#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
+plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
+#‘bs’是蓝色
+plt.plot([2], [1.6], &#39;g^&#39;)
+plt.axis([-2,6,-2,6])
+plt.title(&#39;circle example&#39;)
+plt.show()
+</code></pre>
 
-				</p>
-			</div>
- 	
-		
-		
-			<div>
-				<h3><a href="14904262679967.html">Python科学计算库</a></h3>
-				<p>
-					<time datetime="2017-03-25T15:17:47+08:00" pubdate><span class='month'>3月</span> <span class='day'>25</span> <span class='year'>2017</span></time>
-					&nbsp;&nbsp;
-				  <span class="categories">posted in 
-				  
-					    <a class='category' href='Python%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%BA%93.html'>Python科学计算库</a>&nbsp;
-				   
-				  </span>
 
-				</p>
-			</div>
- 	 
-</div>  
+</div>
+
+<br /><br />
+<hr />
+
+<div class="row clearfix">
+  <div class="large-6 columns">
+	<div class="text-left" style="padding:15px 0px;">
+		
+	        <a href="14930173812526.html"  title="Previous Post: Matplotlib 入门">&laquo; Matplotlib 入门</a>
+	    
+	</div>
+  </div>
+  <div class="large-6 columns">
+	<div class="text-right" style="padding:15px 0px;">
+		
+	        <a href="14928433858430.html" 
+	        title="Next Post: 线性分类器 linear classify">线性分类器 linear classify &raquo;</a>
+	    
+	</div>
+  </div>
+</div>
+
+<div class="row">
+<div style="padding:0px 0.93em;" class="share-comments">
+
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var currentURL = '14929518453531.html';
+		$('#side-nav a').each(function(){
+			if($(this).attr('href') == currentURL){
+				$(this).parent().addClass('active');
+			}
+		});
+	});
+</script>  
 </div></div>
 
 

@@ -67,6 +67,16 @@
           
 
       
+        <li class="divider"></li>
+        <li><label>matplotlib</label></li>
+
+          
+            <li><a title="Matplotlib 入门" href="14930173812526.html">Matplotlib 入门</a></li>
+          
+            <li><a title="Matplotlib by Example" href="14929518453531.html">Matplotlib by Example</a></li>
+          
+
+      
       </ul>
     </aside>
 
@@ -97,6 +107,14 @@
                       <li class="side-title"><span>ML算法</span></li>
                         
                           <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>matplotlib</span></li>
+                        
+                          <li><a title="Matplotlib 入门" href="14930173812526.html">Matplotlib 入门</a></li>
+                        
+                          <li><a title="Matplotlib by Example" href="14929518453531.html">Matplotlib by Example</a></li>
                         
 
                     
@@ -165,6 +183,40 @@ array([[1, 2, 3, 4],<br/>
 </blockquote>
 </blockquote></li>
 </ul>
+
+<h3 id="toc_2">zeros函数</h3>
+
+<blockquote>
+<blockquote>
+<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
+</blockquote>
+</blockquote>
+
+<p>Return a new array of given shape and type, filled with zeros.<br/>
+根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+
+<h4 id="toc_3">examples</h4>
+
+<blockquote>
+<blockquote>
+<p>np.zeros(5)<br/>
+array([ 0., 0., 0., 0., 0.])</p>
+
+<p>np.zeros((5,), dtype=np.int)<br/>
+array([0, 0, 0, 0, 0])</p>
+
+<p>np.zeros((2, 1))<br/>
+array([[ 0.], [ 0.]])</p>
+
+<p>s = (2,2)<br/>
+np.zeros(s)<br/>
+np.zeros(s)<br/>
+array([[ 0., 0.], [ 0., 0.]])</p>
+
+<p>np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;), (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype<br/>
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])</p>
+</blockquote>
+</blockquote>
 
 
 </div>

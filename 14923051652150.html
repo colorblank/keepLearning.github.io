@@ -67,6 +67,16 @@
           
 
       
+        <li class="divider"></li>
+        <li><label>matplotlib</label></li>
+
+          
+            <li><a title="Matplotlib 入门" href="14930173812526.html">Matplotlib 入门</a></li>
+          
+            <li><a title="Matplotlib by Example" href="14929518453531.html">Matplotlib by Example</a></li>
+          
+
+      
       </ul>
     </aside>
 
@@ -97,6 +107,14 @@
                       <li class="side-title"><span>ML算法</span></li>
                         
                           <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
+                        
+
+                    
+                      <li class="side-title"><span>matplotlib</span></li>
+                        
+                          <li><a title="Matplotlib 入门" href="14930173812526.html">Matplotlib 入门</a></li>
+                        
+                          <li><a title="Matplotlib by Example" href="14929518453531.html">Matplotlib by Example</a></li>
                         
 
                     
@@ -155,17 +173,25 @@
 </ul></li>
 </ul>
 
-<p>可以被用来检测特定键是否被按下，例如按键 a 是否被按下。</p>
-
-<pre><code class="language-Python">k = cv2.waitKey(0)&amp;0xFF
-#64位系统必须有&amp;0xFF
-if k==27: 
-    cv2.destroyAllWindows()
-elif k == ord(&#39;s&#39;):
-    cv2.imwrite(&#39;messigray.png&#39;,img)
-    cv2.destroyAllWindows()
-</code></pre></li>
+<p>可以被用来检测特定键是否被按下，例如按键 s 是否被按下。</p></li>
 </ul></li>
+</ul>
+
+<h3 id="toc_1">example</h3>
+
+<pre><code>    ```Python
+    k = cv2.waitKey(0)&amp;0xFF
+    #64位系统必须有&amp;0xFF
+    if k==27: 
+    #27在键盘上代表escape
+        cv2.destroyAllWindows()
+    elif k == ord(&#39;s&#39;):
+        cv2.imwrite(&#39;messigray.png&#39;,img)
+        cv2.destroyAllWindows()
+    ```
+</code></pre>
+
+<ul>
 <li><p>删除窗口</p>
 
 <ul>
@@ -181,6 +207,41 @@ elif k == ord(&#39;s&#39;):
 <p>第一个参数是保存目的图像名，第二个参数是源图像变量名。即将第二个参数代表的图像保存至第一个的参数代表的图像中。</p></li>
 </ul></li>
 </ul>
+
+<h2 id="toc_2">视频</h2>
+
+<h3 id="toc_3">example</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;
+Created on Sun Apr 23 14:13:01 2017
+
+@author: zhang
+&quot;&quot;&quot;
+
+#import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+
+cap = cv2.VideoCapture(0)
+while(True):
+    ret, frame = cap.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    cv2.imshow(&#39;frame&#39;,gray)
+    #显示的是灰度视频
+    if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
+        break
+cap.release()
+cv2.destroyAllWindows()
+#destroyAllWindows()在mac上回出现无法及时关闭，进入卡顿加载的状态，以下4条代码是解决方法
+cv2.waitKey(1)
+cv2.waitKey(1)
+cv2.waitKey(1)
+cv2.waitKey(1)
+#Mac上产生的Python窗口在dock上是无法关闭的，必须直接退出Python
+exit()
+</code></pre>
 
 
 </div>
