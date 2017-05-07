@@ -63,6 +63,10 @@
         <li><label>ML算法</label></li>
 
           
+            <li><a title="激活函数" href="14941641082907.html">激活函数</a></li>
+          
+            <li><a title="Loss Function 损失函数" href="14941558480316.html">Loss Function 损失函数</a></li>
+          
             <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
           
 
@@ -105,6 +109,10 @@
 
                     
                       <li class="side-title"><span>ML算法</span></li>
+                        
+                          <li><a title="激活函数" href="14941641082907.html">激活函数</a></li>
+                        
+                          <li><a title="Loss Function 损失函数" href="14941558480316.html">Loss Function 损失函数</a></li>
                         
                           <li><a title="线性分类器 linear classify" href="14928433858430.html">线性分类器 linear classify</a></li>
                         
@@ -249,6 +257,31 @@
 
 <p>你可以使用函数 cap.get(propId) 来获得视频的一些参数信息。这里 propId 可以是 0 到 18 之间的任何整数。每一个数代表视频的一个属性。</p>
 
+<blockquote>
+<blockquote>
+<p>CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds or video capture timestamp.<br/>
+CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.<br/>
+CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file: 0 - start of the film, 1 - end of the film.<br/>
+CV_CAP_PROP_FRAME_WIDTH 视频每一帧的宽。<br/>
+CV_CAP_PROP_FRAME_HEIGHT 视频每一帧的高。<br/>
+CV_CAP_PROP_FPS 视频的帧速。<br/>
+CV_CAP_PROP_FOURCC 4个字符表示的视频编码器格式。<br/>
+CV_CAP_PROP_FRAME_COUNT 视频的帧数。<br/>
+CV_CAP_PROP_FORMAT Format of the Mat objects returned byretrieve().<br/>
+CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.<br/>
+CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).<br/>
+CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).<br/>
+CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).<br/>
+CV_CAP_PROP_HUE Hue of the image (only for cameras).<br/>
+CV_CAP_PROP_GAIN Gain of the image (only for cameras).<br/>
+CV_CAP_PROP_EXPOSURE Exposure (only for cameras).<br/>
+CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.<br/>
+CV_CAP_PROP_WHITE_BALANCE Currently not supported<br/>
+CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)<br/>
+注意：当你查询的属性是VideoCapture()不支持的属性时，返回值为0.</p>
+</blockquote>
+</blockquote>
+
 <p>其中的一些值可以使用 cap.set(propId,value) 来修改，value 就是 你想要设置成的新值。</p>
 
 <p>例如，我可以使用 cap.get(3) 和 cap.get(4) 来查看每一帧的宽和高。 默认情况下得到的值是 640X480。但是我可以使用 ret=cap.set(3,320) 和 ret=cap.set(4,240) 来把宽和高改成 320X240。</p>
@@ -271,11 +304,13 @@ cap = cv2.VideoCapture(0)
 #VideoCapture是摄像头对象，0是内置摄像头
 while(True):
     ret, frame = cap.read()
-    #cap.read()返回一个布尔值
+    #cap.read()返回值有两个，一个是布尔值，赋给ret；一个是三维矩阵，为每一帧的图像，赋给frame
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #cv2.cvtColor是转换颜色空间函数，将每一帧图像转换为灰度图像
     cv2.imshow(&#39;frame&#39;,gray)
-    #显示的是灰度视频
+    #显示的是灰度视频，第一个参数是窗口名称
     if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
+    #每一帧持续1毫秒
         break
 cap.release()
 #释放摄像头
@@ -286,7 +321,14 @@ cv2.waitKey(1)
 cv2.waitKey(1)
 cv2.waitKey(1)
 #Mac上产生的Python窗口在dock上是无法关闭的，必须直接退出Python
+#因为上述是以简单程序的形式，而不是以主函数执行，无法及时退出程序，所以通过exit（）直接退出Python
 exit()
+#也可以以主函数形式运行，但上述主要代码必须在一个函数体内。例如：
+&quot;&quot;&quot;def video_capture():
+    ...
+if __name__ == &#39;__main__&#39;:
+    video_capture()
+    &quot;&quot;&quot;
 </code></pre>
 
 
