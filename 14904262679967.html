@@ -153,46 +153,40 @@
 <li><p>Returns<br/>
 c : ndarray<br/>
     The tiled output array.</p></li>
-<li><p>Examples</p>
-
-<hr/>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a = np.array([0, 1, 2])<br/>
-np.tile(a, 2)<br/>
-array([0, 1, 2, 0, 1, 2])<br/>
-<mark>数组a的内容重复2次</mark><br/>
-np.tile(a, (2, 2))<br/>
-array([[0, 1, 2, 0, 1, 2],<br/>
-       [0, 1, 2, 0, 1, 2]])<br/>
-       <mark>数组a的内容在行方向上重复2次，列方向上重复2次</mark><br/>
-np.tile(a, (2, 1, 2))<br/>
-array([[[0, 1, 2, 0, 1, 2]],<br/>
-       [[0, 1, 2, 0, 1, 2]]])<br/>
-       <mark>可在三维上重复</mark><br/>
-b = np.array([[1, 2], [3, 4]])<br/>
-np.tile(b, 2)<br/>
-array([[1, 2, 1, 2],<br/>
-       [3, 4, 3, 4]])<br/>
-np.tile(b, (2, 1))<br/>
-array([[1, 2],<br/>
-       [3, 4],<br/>
-       [1, 2],<br/>
-       [3, 4]])<br/>
-c = np.array([1,2,3,4])<br/>
-np.tile(c,(4,1))<br/>
-array([[1, 2, 3, 4],<br/>
-       [1, 2, 3, 4],<br/>
-       [1, 2, 3, 4],<br/>
-       [1, 2, 3, 4]])</p>
-</blockquote>
-</blockquote>
-</blockquote></li>
 </ul>
 
-<h3 id="toc_2">zeros函数</h3>
+<h4 id="toc_2">Examples</h4>
+
+<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
+     &gt;&gt;&gt; np.tile(a, 2)
+    array([0, 1, 2, 0, 1, 2])
+    #数组a的内容重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 2))
+    array([[0, 1, 2, 0, 1, 2],
+       [0, 1, 2, 0, 1, 2]])
+       #数组a的内容在行方向上重复2次，列方向上重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
+    array([[[0, 1, 2, 0, 1, 2]],
+       [[0, 1, 2, 0, 1, 2]]])
+       ==可在三维上重复==
+    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
+    &gt;&gt;&gt; np.tile(b, 2)
+    array([[1, 2, 1, 2],
+       [3, 4, 3, 4]])
+    &gt;&gt;&gt; np.tile(b, (2, 1))
+    array([[1, 2],
+       [3, 4],
+       [1, 2],
+       [3, 4]])
+    &gt;&gt;&gt; c = np.array([1,2,3,4])
+    &gt;&gt;&gt; np.tile(c,(4,1))
+    array([[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]])
+</code></pre>
+
+<h3 id="toc_3">zeros函数</h3>
 
 <blockquote>
 <blockquote>
@@ -203,30 +197,50 @@ array([[1, 2, 3, 4],<br/>
 <p>Return a new array of given shape and type, filled with zeros.<br/>
 根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
 
-<h4 id="toc_3">examples</h4>
+<h4 id="toc_4">examples</h4>
+
+<pre><code>&gt;&gt;np.zeros(5)
+array([ 0., 0., 0., 0., 0.])
+&gt;&gt;
+np.zeros((5,), dtype=np.int)
+array([0, 0, 0, 0, 0])
+&gt;&gt;
+np.zeros((2, 1))
+array([[ 0.], [ 0.]])
+&gt;&gt;
+s = (2,2)
+np.zeros(s)
+np.zeros(s)
+array([[ 0., 0.], [ 0., 0.]])
+&gt;&gt;
+np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+</code></pre>
+
+<h3 id="toc_5">dot函数</h3>
 
 <blockquote>
-<blockquote>
-<p>np.zeros(5)<br/>
-array([ 0., 0., 0., 0., 0.])</p>
-
-<p>np.zeros((5,), dtype=np.int)<br/>
-array([0, 0, 0, 0, 0])</p>
-
-<p>np.zeros((2, 1))<br/>
-array([[ 0.], [ 0.]])</p>
-
-<p>s = (2,2)<br/>
-np.zeros(s)<br/>
-np.zeros(s)<br/>
-array([[ 0., 0.], [ 0., 0.]])</p>
-
-<p>np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;), (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype<br/>
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])</p>
-</blockquote>
+<p>numpy.dot(a, b, out=None)</p>
 </blockquote>
 
-<h3 id="toc_4">dot函数</h3>
+<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+
+<h4 id="toc_6">examples</h4>
+
+<pre><code>&gt;&gt;&gt; np.dot(3, 4)
+12
+
+
+&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+
+
+&gt;&gt;&gt; a = [[1, 0], [0, 1]]
+&gt;&gt;&gt; b = [[4, 1], [2, 2]]
+&gt;&gt;&gt; np.dot(a, b)
+array([[4, 1],
+   [2, 2]])
+</code></pre>
 
 
 </div>
