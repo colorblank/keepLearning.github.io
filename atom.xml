@@ -4,7 +4,7 @@
   <title><![CDATA[keepLearning]]></title>
   <link href="https://colorblank.github.io/keepLearning.github.io/atom.xml" rel="self"/>
   <link href="https://colorblank.github.io/keepLearning.github.io/"/>
-  <updated>2017-07-11T14:51:01+08:00</updated>
+  <updated>2017-07-11T14:51:03+08:00</updated>
   <id>https://colorblank.github.io/keepLearning.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -109,21 +109,6 @@
     #根据字典内值得大小对字典进行排序，reverse=True是降序
     return sortedClassCount[0][0]
 </code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[特征提取( 图像处理)]]></title>
-    <link href="https://colorblank.github.io/keepLearning.github.io/14947312967207.html"/>
-    <updated>2017-05-14T11:08:16+08:00</updated>
-    <id>https://colorblank.github.io/keepLearning.github.io/14947312967207.html</id>
-    <content type="html"><![CDATA[
-<h2 id="toc_0">Haar特征</h2>
-
-<h2 id="toc_1">HOG特征</h2>
-
-<h2 id="toc_2">LBP特征</h2>
 
 ]]></content>
   </entry>
@@ -514,9 +499,9 @@ cv2.destroyAllWindows()
   
   <entry>
     <title type="html"><![CDATA[Matplotlib by Example]]></title>
-    <link href="https://colorblank.github.io/keepLearning.github.io/14929518453531.html"/>
-    <updated>2017-04-23T20:50:45+08:00</updated>
-    <id>https://colorblank.github.io/keepLearning.github.io/14929518453531.html</id>
+    <link href="https://colorblank.github.io/keepLearning.github.io/14997563845849.html"/>
+    <updated>2017-07-11T14:59:44+08:00</updated>
+    <id>https://colorblank.github.io/keepLearning.github.io/14997563845849.html</id>
     <content type="html"><![CDATA[
 <h2 id="toc_0">实例</h2>
 
@@ -541,6 +526,10 @@ plt.axis([-2,6,-2,6])
 plt.title(&#39;circle example&#39;)
 plt.show()
 </code></pre>
+
+<p>结果如下：</p>
+
+<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
 
 ]]></content>
   </entry>

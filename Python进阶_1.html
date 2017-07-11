@@ -50,8 +50,8 @@
         <div class="col-sm-8 blog-main">
 			
 					<div class="blog-post">
-			            <h2 class="blog-post-title"></h2>
-			            <p class="blog-post-meta">2017/3/25 
+			            <h2 class="blog-post-title">Matplotlib 入门</h2>
+			            <p class="blog-post-meta">2017/4/24 
 				            &nbsp;posted in 
 							
 							    <a class='category' href='Python%E8%BF%9B%E9%98%B6.html'>Python进阶</a>&nbsp;
@@ -59,112 +59,7 @@
 							 
 			            </p>
 			            <div class="content-responsive">
-			            <h1 id="toc_0">numpy常见函数</h1>
-
-<h2 id="toc_1">tile函数</h2>
-
-<ul>
-<li><p>Parameters（参数）</p>
-
-<p>A : array_like<br/>
-    The input array.<br/>
-    输入参数是数组</p>
-
-<p>reps : array_like<br/>
-    The number of repetitions of <code>A</code> along each axis.<br/>
-    重复reps次</p></li>
-<li><p>Returns<br/>
-c : ndarray<br/>
-    The tiled output array.</p></li>
-</ul>
-
-<h3 id="toc_2">Examples</h3>
-
-<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
-     &gt;&gt;&gt; np.tile(a, 2)
-    array([0, 1, 2, 0, 1, 2])
-    #数组a的内容重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 2))
-    array([[0, 1, 2, 0, 1, 2],
-       [0, 1, 2, 0, 1, 2]])
-       #数组a的内容在行方向上重复2次，列方向上重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
-    array([[[0, 1, 2, 0, 1, 2]],
-       [[0, 1, 2, 0, 1, 2]]])
-       ==可在三维上重复==
-    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
-    &gt;&gt;&gt; np.tile(b, 2)
-    array([[1, 2, 1, 2],
-       [3, 4, 3, 4]])
-    &gt;&gt;&gt; np.tile(b, (2, 1))
-    array([[1, 2],
-       [3, 4],
-       [1, 2],
-       [3, 4]])
-    &gt;&gt;&gt; c = np.array([1,2,3,4])
-    &gt;&gt;&gt; np.tile(c,(4,1))
-    array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
-</code></pre>
-
-<h2 id="toc_3">zeros函数</h2>
-
-<blockquote>
-<blockquote>
-<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
-</blockquote>
-</blockquote>
-
-<p>Return a new array of given shape and type, filled with zeros.<br/>
-根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
-
-<h3 id="toc_4">examples</h3>
-
-<pre><code>&gt;&gt;np.zeros(5)
-array([ 0., 0., 0., 0., 0.])
-&gt;&gt;
-np.zeros((5,), dtype=np.int)
-array([0, 0, 0, 0, 0])
-&gt;&gt;
-np.zeros((2, 1))
-array([[ 0.], [ 0.]])
-&gt;&gt;
-s = (2,2)
-np.zeros(s)
-np.zeros(s)
-array([[ 0., 0.], [ 0., 0.]])
-&gt;&gt;
-np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
-</code></pre>
-
-<h2 id="toc_5">dot函数</h2>
-
-<blockquote>
-<p>numpy.dot(a, b, out=None)</p>
-</blockquote>
-
-<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
-
-<h3 id="toc_6">examples</h3>
-
-<pre><code>&gt;&gt;&gt; np.dot(3, 4)
-12
-
-
-&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
-(-13+0j)
-
-
-&gt;&gt;&gt; a = [[1, 0], [0, 1]]
-&gt;&gt;&gt; b = [[4, 1], [2, 2]]
-&gt;&gt;&gt; np.dot(a, b)
-array([[4, 1],
-   [2, 2]])
-</code></pre>
-
+			            
 
 
 						
@@ -182,8 +77,8 @@ array([[4, 1],
 				<li class=""><a href="archives.html">归档</a></li>
 
 			
-            	<li class=" disabled "><a href="#index">下一页 <span aria-hidden="true">&rarr;</span></a></li>
-            
+			<li class=""><a href="Python进阶_2.html">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+			
             </ul>
           </nav>
 
@@ -206,7 +101,7 @@ array([[4, 1],
             
             <ol class="list-unstyled">
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html">Python进阶&nbsp;(2)</a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html">Python进阶&nbsp;(4)</a>
 	        
 	        
 	        
@@ -222,15 +117,7 @@ array([[4, 1],
 	  
             <ol class="list-unstyled">
 	      <li class="post">
-	        <a href="ML%E7%AE%97%E6%B3%95.html">ML算法&nbsp;(4)</a>
-	        
-	        
-	        
-	      </li>
-	  
-            <ol class="list-unstyled">
-	      <li class="post">
-	        <a href="matplotlib.html">matplotlib&nbsp;(2)</a>
+	        <a href="ML%E7%AE%97%E6%B3%95.html">ML算法&nbsp;(3)</a>
 	        
 	        
 	        
@@ -246,12 +133,6 @@ array([[4, 1],
 	      
 		      
 		        <a href="14928433858430.html">线性分类器 linear classify</a><br />
-		      
-	     
-	  
-	      
-		      
-		        <a href="14947312967207.html">特征提取( 图像处理)</a><br />
 		      
 	     
 	  
@@ -287,7 +168,7 @@ array([[4, 1],
 	  
 	      
 		      
-		        <a href="14929518453531.html">Matplotlib by Example</a><br />
+		        <a href="14997563845849.html">Matplotlib by Example</a><br />
 		      
 	     
 	  

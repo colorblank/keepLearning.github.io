@@ -50,49 +50,120 @@
         <div class="col-sm-8 blog-main">
 			
 					<div class="blog-post">
-			            <h2 class="blog-post-title">Loss Function 损失函数</h2>
-			            <p class="blog-post-meta">2017/5/7 
+			            <h2 class="blog-post-title"></h2>
+			            <p class="blog-post-meta">2017/3/25 
 				            &nbsp;posted in 
 							
-							    <a class='category' href='ML%E7%AE%97%E6%B3%95.html'>ML算法</a>&nbsp;
+							    <a class='category' href='Python%E8%BF%9B%E9%98%B6.html'>Python进阶</a>&nbsp;
 							 
 							 
 			            </p>
 			            <div class="content-responsive">
-			            <p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
+			            <h1 id="toc_0">numpy常见函数</h1>
 
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
+<h2 id="toc_1">tile函数</h2>
 
-<p>损失函数的值越小，越接近真实值。</p>
+<ul>
+<li><p>Parameters（参数）</p>
 
-<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
+<p>A : array_like<br/>
+    The input array.<br/>
+    输入参数是数组</p>
 
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
+<p>reps : array_like<br/>
+    The number of repetitions of <code>A</code> along each axis.<br/>
+    重复reps次</p></li>
+<li><p>Returns<br/>
+c : ndarray<br/>
+    The tiled output array.</p></li>
+</ul>
 
-<blockquote>
-<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
-</blockquote>
+<h3 id="toc_2">Examples</h3>
 
-<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
-
-<p>上图中第一列的损失值计算方法如下：</p>
-
-<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
-     =2.9
+<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
+     &gt;&gt;&gt; np.tile(a, 2)
+    array([0, 1, 2, 0, 1, 2])
+    #数组a的内容重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 2))
+    array([[0, 1, 2, 0, 1, 2],
+       [0, 1, 2, 0, 1, 2]])
+       #数组a的内容在行方向上重复2次，列方向上重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
+    array([[[0, 1, 2, 0, 1, 2]],
+       [[0, 1, 2, 0, 1, 2]]])
+       ==可在三维上重复==
+    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
+    &gt;&gt;&gt; np.tile(b, 2)
+    array([[1, 2, 1, 2],
+       [3, 4, 3, 4]])
+    &gt;&gt;&gt; np.tile(b, (2, 1))
+    array([[1, 2],
+       [3, 4],
+       [1, 2],
+       [3, 4]])
+    &gt;&gt;&gt; c = np.array([1,2,3,4])
+    &gt;&gt;&gt; np.tile(c,(4,1))
+    array([[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]])
 </code></pre>
 
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
-
-<p>它的公式如下：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
-
-<h2 id="toc_1">softmax</h2>
+<h2 id="toc_3">zeros函数</h2>
 
 <blockquote>
+<blockquote>
+<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
 </blockquote>
+</blockquote>
+
+<p>Return a new array of given shape and type, filled with zeros.<br/>
+根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+
+<h3 id="toc_4">examples</h3>
+
+<pre><code>&gt;&gt;np.zeros(5)
+array([ 0., 0., 0., 0., 0.])
+&gt;&gt;
+np.zeros((5,), dtype=np.int)
+array([0, 0, 0, 0, 0])
+&gt;&gt;
+np.zeros((2, 1))
+array([[ 0.], [ 0.]])
+&gt;&gt;
+s = (2,2)
+np.zeros(s)
+np.zeros(s)
+array([[ 0., 0.], [ 0., 0.]])
+&gt;&gt;
+np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+</code></pre>
+
+<h2 id="toc_5">dot函数</h2>
+
+<blockquote>
+<p>numpy.dot(a, b, out=None)</p>
+</blockquote>
+
+<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+
+<h3 id="toc_6">examples</h3>
+
+<pre><code>&gt;&gt;&gt; np.dot(3, 4)
+12
+
+
+&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+
+
+&gt;&gt;&gt; a = [[1, 0], [0, 1]]
+&gt;&gt;&gt; b = [[4, 1], [2, 2]]
+&gt;&gt;&gt; np.dot(a, b)
+array([[4, 1],
+   [2, 2]])
+</code></pre>
 
 
 
@@ -111,8 +182,8 @@
 				<li class=""><a href="archives.html">归档</a></li>
 
 			
-			<li class=""><a href="all_9.html">下一页 <span aria-hidden="true">&rarr;</span></a></li>
-			
+            	<li class=" disabled "><a href="#index">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+            
             </ul>
           </nav>
 
@@ -135,7 +206,7 @@
             
             <ol class="list-unstyled">
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html">Python进阶&nbsp;(2)</a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html">Python进阶&nbsp;(4)</a>
 	        
 	        
 	        
@@ -151,15 +222,7 @@
 	  
             <ol class="list-unstyled">
 	      <li class="post">
-	        <a href="ML%E7%AE%97%E6%B3%95.html">ML算法&nbsp;(4)</a>
-	        
-	        
-	        
-	      </li>
-	  
-            <ol class="list-unstyled">
-	      <li class="post">
-	        <a href="matplotlib.html">matplotlib&nbsp;(2)</a>
+	        <a href="ML%E7%AE%97%E6%B3%95.html">ML算法&nbsp;(3)</a>
 	        
 	        
 	        
@@ -175,12 +238,6 @@
 	      
 		      
 		        <a href="14928433858430.html">线性分类器 linear classify</a><br />
-		      
-	     
-	  
-	      
-		      
-		        <a href="14947312967207.html">特征提取( 图像处理)</a><br />
 		      
 	     
 	  
@@ -216,7 +273,7 @@
 	  
 	      
 		      
-		        <a href="14929518453531.html">Matplotlib by Example</a><br />
+		        <a href="14997563845849.html">Matplotlib by Example</a><br />
 		      
 	     
 	  
