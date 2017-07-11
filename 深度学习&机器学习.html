@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  激活函数 - 
+  深度学习&机器学习 - 
   
 
   </title>
@@ -78,14 +78,17 @@ $(document).ready(function(event) {
 </nav>
   <div id="main">
     <div id="content"> 
-<div>
-	<article class="hentry" role="article">
-	<header>
-			  	<h1 class="entry-title">激活函数</h1>
-				<p class="meta"><time datetime="2017-05-07T21:35:08+08:00" pubdate data-updated="true">2017/5/7</time></p>
-			 </header>
-		  	<div class="entry-content">
-			  	<h2 id="toc_0">定义</h2>
+<div class="blog-index">
+
+	<article>
+		 <header>
+		  	<h1 class="entry-title"><a href="14941641082907.html">激活函数</a></h1>
+			<p class="meta"><time datetime="2017-05-07T21:35:08+08:00" 
+			pubdate data-updated="true">2017/5/7</time></p>
+		 </header>
+	  	<div class="entry-content">
+		  	
+		  	<h2 id="toc_0">定义</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Activation_function">以下是来自维基百科的激活函数的定义</a></p>
 
@@ -122,44 +125,175 @@ $(document).ready(function(event) {
 
 <p>上图蓝色线条的就是ReLU函数</p>
 
-			</div>
-
-		
-	  
-		<footer>
-		 <p class="meta">
-
-			<strong>Categories:</strong>&nbsp; 
-			<span class="categories">
-			
-			    <a class='category' href='%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html'>深度学习&机器学习</a>&nbsp;
-			 
-			</span>
-		    </p>
-		    <p class="meta">
-		      
-		 </p>
-	    
-		<div class="sharing">
-		  
-          
-
-          
 
 		</div>
 
-	    <p class="meta">
-	    
-	        <a class="basic-alignment left" href="14997578015392.html" 
-	        title="Previous Post: Loss Function 损失函数">&laquo; Loss Function 损失函数</a>
-	    
-	    
-	        <a class="basic-alignment right" href="14941558480316.html" 
-	        title="Next Post: Loss Function 损失函数">Loss Function 损失函数 &raquo;</a>
-	    
-	    </p>
-	  </footer>
+		
+
 	</article>
+ 
+	<article>
+		 <header>
+		  	<h1 class="entry-title"><a href="14941558480316.html">Loss Function 损失函数</a></h1>
+			<p class="meta"><time datetime="2017-05-07T19:17:28+08:00" 
+			pubdate data-updated="true">2017/5/7</time></p>
+		 </header>
+	  	<div class="entry-content">
+		  	
+		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
+
+<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
+
+<p>损失函数的值越小，越接近真实值。</p>
+
+<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
+
+<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
+
+<blockquote>
+<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
+</blockquote>
+
+<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
+
+<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
+
+<p>上图中第一列的损失值计算方法如下：</p>
+
+<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
+     =2.9
+</code></pre>
+
+<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
+
+<p>它的公式如下：</p>
+
+<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
+
+<h2 id="toc_1">Softmax 函数</h2>
+
+<blockquote>
+</blockquote>
+
+
+		</div>
+
+		
+
+	</article>
+ 
+	<article>
+		 <header>
+		  	<h1 class="entry-title"><a href="14928433858430.html">线性分类器 linear classify</a></h1>
+			<p class="meta"><time datetime="2017-04-22T14:43:05+08:00" 
+			pubdate data-updated="true">2017/4/22</time></p>
+		 </header>
+	  	<div class="entry-content">
+		  	
+		  	<ul>
+<li>
+<a href="#toc_0">k近邻算法</a>
+</li>
+<li>
+<a href="#toc_1">代码</a>
+</li>
+</ul>
+
+
+<h2 id="toc_0">k近邻算法</h2>
+
+<p>k近邻算法属于监督学习的范围，即通过输入参数和训练样本的“比较”，对输入的参数进行分类。<br/>
+ 举个现实的例子，给《非诚勿扰》的女嘉宾打分。打分必须有一个标准，例如以肤色、身高两个为标准进行打分。而怎样的肤色和身高才算漂亮？<br/>
+ 首先，我们将肤色设置为从 1 到 10的级别，对应现实中从白到黑的肤色等级，身高也是类似；然后我们就必须给定一个根据肤色和身高对应的漂亮级别，如：A级美女（最漂亮的）、B级美女...这就形成了，肤色、身高、美丽级数这样的三个属性的表，而且表中有很很多已知参数，类似下表。</p>
+
+<table>
+<thead>
+<tr>
+<th>肤色</th>
+<th>身高</th>
+<th>美丽级数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>3</td>
+<td>165</td>
+<td>A</td>
+</tr>
+<tr>
+<td>6</td>
+<td>170</td>
+<td>B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>160</td>
+<td>A</td>
+</tr>
+<tr>
+<td>5</td>
+<td>179</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+
+<p>最终，根据评分的标准，将某一个女嘉宾的数据输入，得到距离女嘉宾数据最近的美丽等级。由于女嘉宾数据并不一定和表中数据完全相同，且上述表只是参考，我们提出一个划分范围（即k）。根据k的取值，我们得出的结果有可能不同。<br/>
+ 即女嘉宾甲处在A级美女和B级美女的交接处，如果k=1，那么她可能归为A级，但k=2,她可能归为B级。<br/>
+因此，在实际应用中，k的取值往往需要不断试验得出。如图：</p>
+
+<p><img src="media/14928433858430/figure_1.png" alt="figure_1"/></p>
+
+<h2 id="toc_1">代码</h2>
+
+<ul>
+<li>第一个分类器函数</li>
+</ul>
+
+<pre><code class="language-python">def classify0(inX, dataSet, labels, k):
+    #inX是用于分类的输入向量(即未知量)
+    #dataSet是输入的训练样本集
+    #labels是标签向量（返回值在标签向量中选择)
+    #k是用于选择最近邻居的数目
+    dataSetSize = dataSet.shape[0]
+
+#shape[0]返回数组的行数
+    diffMat = tile(inX, (dataSetSize,1)) - dataSet
+
+#将inX扩充为和训练样本数组相同大小
+    sqDiffMat = diffMat**2
+    sqDistances = sqDiffMat.sum(axis=1)
+    #sum(axis = 1)返回每一行的和
+    distances = sqDistances**0.5
+    sortedDistIndicies = distances.argsort()   
+    #返回的是数组值从小到大的索引值,是数组类型的
+    classCount={}
+    #生成一个字典          
+    for i in range(k):
+        voteIlabel = labels[sortedDistIndicies[i]]
+        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
+#dict.get(key, default=None)
+#返回指定键的值，如果值不在字典中返回default值
+#在前k个最近的数据点中，对应标签的内容和数目，即距离输入量最近的类别A,类别B等的数目
+    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    #根据字典内值得大小对字典进行排序，reverse=True是降序
+    return sortedClassCount[0][0]
+</code></pre>
+
+
+		</div>
+
+		
+
+	</article>
+  
+	<div class="pagination">
+	
+<a href="archives.html">Blog Archives</a>
+	 
+	    
+	</div>
 </div>
  <aside class="sidebar"> 
 
