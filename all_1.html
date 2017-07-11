@@ -82,114 +82,254 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
+		  	<h1 class="entry-title"><a href="14997581969251.html">Opencv</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:29:56+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">tile函数</h2>
-
+		  	<ul>
+<li>
+<a href="#toc_0">图片</a>
 <ul>
-<li><p>Parameters（参数）</p>
-
-<p>A : array_like<br/>
-    The input array.<br/>
-    输入参数是数组</p>
-
-<p>reps : array_like<br/>
-    The number of repetitions of <code>A</code> along each axis.<br/>
-    重复reps次</p></li>
-<li><p>Returns<br/>
-c : ndarray<br/>
-    The tiled output array.</p></li>
+<li>
+<a href="#toc_1">读入图片</a>
+</li>
+<li>
+<a href="#toc_2">显示图片</a>
+</li>
+<li>
+<a href="#toc_3">等待键盘输入</a>
+</li>
+<li>
+<a href="#toc_4">保存图片</a>
+</li>
+<li>
+<a href="#toc_5">删除窗口</a>
+<ul>
+<li>
+<a href="#toc_6">example</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_7">视频</a>
+<ul>
+<li>
+<a href="#toc_8">从摄像头读入视频</a>
+<ul>
+<li>
+<a href="#toc_9">example</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_10">从文件中播放视频</a>
+<ul>
+<li>
+<a href="#toc_11">example</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
-<h3 id="toc_1">Examples</h3>
 
-<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
-     &gt;&gt;&gt; np.tile(a, 2)
-    array([0, 1, 2, 0, 1, 2])
-    #数组a的内容重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 2))
-    array([[0, 1, 2, 0, 1, 2],
-       [0, 1, 2, 0, 1, 2]])
-       #数组a的内容在行方向上重复2次，列方向上重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
-    array([[[0, 1, 2, 0, 1, 2]],
-       [[0, 1, 2, 0, 1, 2]]])
-       ==可在三维上重复==
-    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
-    &gt;&gt;&gt; np.tile(b, 2)
-    array([[1, 2, 1, 2],
-       [3, 4, 3, 4]])
-    &gt;&gt;&gt; np.tile(b, (2, 1))
-    array([[1, 2],
-       [3, 4],
-       [1, 2],
-       [3, 4]])
-    &gt;&gt;&gt; c = np.array([1,2,3,4])
-    &gt;&gt;&gt; np.tile(c,(4,1))
-    array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
+<h2 id="toc_0">图片</h2>
+
+<h3 id="toc_1">读入图片</h3>
+
+<p>cv2.imread(&#39;dir/xxx.jpg&#39;,0)<br/>
+             读入图像<br/>
+        第一个参数是图像的路径，第二个参数是告诉函数如何读取图像，0为原图读入。<br/>
+        参数二：</p>
+
+<ul>
+<li><p>cv2.IMREAD_COLOR:读入一副彩色图像。图像的透明度会被忽略， 这是默认参数。    - cv2.IMREAD_GRAYSCALE:以灰度模式读入图像</p></li>
+<li><p>cv2.IMREAD_UNCHANGED:读入一幅图像，并且包括图像的 alpha 通道</p></li>
+</ul>
+
+<h3 id="toc_2">显示图片</h3>
+
+<ul>
+<li><p>cv2.imshow(&#39;image&#39;,img)</p>
+
+<p>显示图像，窗口会自动调整为图像大小。<br/>
+第一个参数是显示的窗口的名字，第二个参数是要显示的图片的变量名。你可以创建多个窗口，但是必须给他们不同的名字。</p></li>
+</ul>
+
+<h3 id="toc_3">等待键盘输入</h3>
+
+<ul>
+<li><p>cv2.waitKey()<br/>
+等待键盘输入，参数以毫秒为单位。</p>
+
+<ul>
+<li><p>如果参数为0<br/>
+图片一直显示着，直到按下任意键，图片被关掉，执行下一段代码。</p></li>
+<li><p>如果参数大于0，代表显示图片为多少毫秒，在这段时间后执行下一段代码。</p>
+
+<ul>
+<li><p>如果在显示图片期间，键盘有输入，函数返回键盘输入的ASCII码的数值。</p></li>
+<li><p>如果没有键盘输入，返回值为-1。</p></li>
+</ul>
+
+<p>可以被用来检测特定键是否被按下，例如按键 s 是否被按下。</p></li>
+</ul></li>
+</ul>
+
+<h3 id="toc_4">保存图片</h3>
+
+<p>cv2.imwrite(&#39;xxx.png&#39;,img)</p>
+
+<p>将img的图像保存为xxx.png</p>
+
+<h3 id="toc_5">删除窗口</h3>
+
+<p>cv2.destroyAllWindows()</p>
+
+<p>用于删除所有窗口。删除特定的窗口可以使用cv2.destroyWindow()，在括号内输入你想删除的窗口名。</p>
+
+<h4 id="toc_6">example</h4>
+
+<pre><code>    ```Python
+    k = cv2.waitKey(0)&amp;0xFF
+    #64位系统必须有&amp;0xFF
+    if k==27: 
+    #27在键盘上代表escape
+        cv2.destroyAllWindows()
+    elif k == ord(&#39;s&#39;):
+        cv2.imwrite(&#39;messigray.png&#39;,img)
+        cv2.destroyAllWindows()
+    ```
 </code></pre>
 
-<h2 id="toc_2">zeros函数</h2>
+<h2 id="toc_7">视频</h2>
+
+<h3 id="toc_8">从摄像头读入视频</h3>
+
+<p>cap.read() 返回一个布尔值(True/False)。如果帧读取的是正确的， 就是 True。所以最后你可以通过检查他的返回值来查看视频文件是否已经到 了结尾。</p>
+
+<p>有时 cap 可能不能成功的初始化摄像头设备。这种情况下上面的代码会报 错。你可以使用 cap.isOpened()，来检查是否成功初始化了。如果返回值是 True，那就没有问题。否则就要使用函数 cap.open()。</p>
+
+<p>你可以使用函数 cap.get(propId) 来获得视频的一些参数信息。这里 propId 可以是 0 到 18 之间的任何整数。每一个数代表视频的一个属性。</p>
 
 <blockquote>
 <blockquote>
-<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
+<p>CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds or video capture timestamp.<br/>
+CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.<br/>
+CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file: 0 - start of the film, 1 - end of the film.<br/>
+CV_CAP_PROP_FRAME_WIDTH 视频每一帧的宽。<br/>
+CV_CAP_PROP_FRAME_HEIGHT 视频每一帧的高。<br/>
+CV_CAP_PROP_FPS 视频的帧速。<br/>
+CV_CAP_PROP_FOURCC 4个字符表示的视频编码器格式。<br/>
+CV_CAP_PROP_FRAME_COUNT 视频的帧数。<br/>
+CV_CAP_PROP_FORMAT Format of the Mat objects returned byretrieve().<br/>
+CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.<br/>
+CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).<br/>
+CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).<br/>
+CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).<br/>
+CV_CAP_PROP_HUE Hue of the image (only for cameras).<br/>
+CV_CAP_PROP_GAIN Gain of the image (only for cameras).<br/>
+CV_CAP_PROP_EXPOSURE Exposure (only for cameras).<br/>
+CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.<br/>
+CV_CAP_PROP_WHITE_BALANCE Currently not supported<br/>
+CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)<br/>
+注意：当你查询的属性是VideoCapture()不支持的属性时，返回值为0.</p>
 </blockquote>
 </blockquote>
 
-<p>Return a new array of given shape and type, filled with zeros.<br/>
-根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+<p>其中的一些值可以使用 cap.set(propId,value) 来修改，value 就是 你想要设置成的新值。</p>
 
-<h3 id="toc_3">examples</h3>
+<p>例如，我可以使用 cap.get(3) 和 cap.get(4) 来查看每一帧的宽和高。 默认情况下得到的值是 640X480。但是我可以使用 ret=cap.set(3,320) 和 ret=cap.set(4,240) 来把宽和高改成 320X240。</p>
 
-<pre><code>&gt;&gt;np.zeros(5)
-array([ 0., 0., 0., 0., 0.])
-&gt;&gt;
-np.zeros((5,), dtype=np.int)
-array([0, 0, 0, 0, 0])
-&gt;&gt;
-np.zeros((2, 1))
-array([[ 0.], [ 0.]])
-&gt;&gt;
-s = (2,2)
-np.zeros(s)
-np.zeros(s)
-array([[ 0., 0.], [ 0., 0.]])
-&gt;&gt;
-np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+<h4 id="toc_9">example</h4>
+
+<pre><code class="language-python">#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;
+Created on Sun Apr 23 14:13:01 2017
+
+@author: zhang
+&quot;&quot;&quot;
+
+import numpy as np
+import cv2
+
+
+cap = cv2.VideoCapture(0)
+#VideoCapture是摄像头对象，0是内置摄像头
+while(True):
+    ret, frame = cap.read()
+    #cap.read()返回值有两个，一个是布尔值，赋给ret；一个是三维矩阵，为每一帧的图像，赋给frame
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #cv2.cvtColor是转换颜色空间函数，将每一帧图像转换为灰度图像
+    cv2.imshow(&#39;frame&#39;,gray)
+    #显示的是灰度视频，第一个参数是窗口名称
+    if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
+    #每一帧持续1毫秒
+        break
+cap.release()
+#释放摄像头
+cv2.destroyAllWindows()
+#destroyAllWindows()在mac上回出现无法及时关闭，进入卡顿加载的状态，以下4条代码是解决方法
+cv2.waitKey(1)
+cv2.waitKey(1)
+cv2.waitKey(1)
+cv2.waitKey(1)
+#Mac上产生的Python窗口在dock上是无法关闭的，必须直接退出Python
+#因为上述是以简单程序的形式，而不是以主函数执行，无法及时退出程序，所以通过exit（）直接退出Python
+exit()
+#也可以以主函数形式运行，但上述主要代码必须在一个函数体内。例如：
+&quot;&quot;&quot;def video_capture():
+    ...
+if __name__ == &#39;__main__&#39;:
+    video_capture()
+    &quot;&quot;&quot;
 </code></pre>
 
-<h2 id="toc_4">dot函数</h2>
+<h3 id="toc_10">从文件中播放视频</h3>
 
-<blockquote>
-<p>numpy.dot(a, b, out=None)</p>
-</blockquote>
+<p>与从摄像头中捕获一样，你只需要把设备索引号改成视频文件的名字。在播放每一帧时，使用 cv2.waiKey() 设置适当的持续时间。通常每一帧图像的持续时间是25毫秒。<br/>
+<mark>注意：要执行cv2.VideoWriter_fourcc，必须安装合适版本的 ffmpeg 或者 gstreamer。</mark></p>
 
-<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+<h4 id="toc_11">example</h4>
 
-<h3 id="toc_5">examples</h3>
+<pre><code class="language-Python">
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;
+Created on Thu May 11 22:19:23 2017
 
-<pre><code>&gt;&gt;&gt; np.dot(3, 4)
-12
+@author: zhang
+&quot;&quot;&quot;
 
+import numpy as np
+import cv2
 
-&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
-(-13+0j)
+cap = cv2.VideoCapture(0)
 
+fourcc = cv2.VideoWriter_fourcc(*&#39;XVID&#39;)
+out = cv2.VideoWriter(&#39;output.avi&#39;, fourcc, 20.0, (640, 480))
 
-&gt;&gt;&gt; a = [[1, 0], [0, 1]]
-&gt;&gt;&gt; b = [[4, 1], [2, 2]]
-&gt;&gt;&gt; np.dot(a, b)
-array([[4, 1],
-   [2, 2]])
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    if ret == True:
+        frame = cv2.flip(frame, 0)
+        out.write(frame)
+        cv2.imshow(&#39;frame&#39;, frame)
+        if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
+            break
+        else:
+            break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+
 </code></pre>
 
 
@@ -220,7 +360,7 @@ array([[4, 1],
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(3)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -238,6 +378,12 @@ array([[4, 1],
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="14997729082239.html">TensorFlow框架入门</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -264,10 +410,6 @@ array([[4, 1],
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997578015392.html">Loss Function 损失函数</a>
-		      </li>
-	     
 	  
 	      
 	  

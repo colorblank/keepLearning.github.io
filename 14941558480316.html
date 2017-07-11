@@ -87,13 +87,11 @@ $(document).ready(function(event) {
 		  	<div class="entry-content">
 			  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
 
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
-
-<p>损失函数的值越小，越接近真实值。</p>
+<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。<mark>损失函数的值越小，越接近真实值。</mark></p>
 
 <p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
 
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
+<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失 （SVM Loss）</h2>
 
 <blockquote>
 <p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
@@ -109,7 +107,9 @@ $(document).ready(function(event) {
      =2.9
 </code></pre>
 
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
+<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。</p>
+
+<p>这些分类结果通过SVM损失函数后，会得到一个损失的值，而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
 
 <p>它的公式如下：</p>
 
@@ -117,8 +117,47 @@ $(document).ready(function(event) {
 
 <h2 id="toc_1">Softmax 函数</h2>
 
-<blockquote>
-</blockquote>
+<p>公式如下：<br/>
+<img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%887.54.47.png" alt="屏幕快照 2017-07-11 下午7.54.47"/></p>
+
+<p>以下图为例，讲解一下Softmax是如何实现的</p>
+
+<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%888.36.19.png" alt="屏幕快照 2017-07-11 下午8.36.19"/></p>
+
+<p>我们用Python来验证一下：</p>
+
+<pre><code>In [1]: import numpy as np
+
+In [12]: cat = np.exp(3.2)
+
+In [13]: car = np.exp(5.1)
+
+In [14]: frog = np.exp(-1.7)
+
+In [15]: sum1 = cat + car + frog 
+#求和，并求概率，即所占比例
+In [16]: sum1
+Out[16]: 188.73712102106381
+In [17]: cat2 = cat/sum1
+
+In [18]: cat2
+Out[18]: 0.12998253901717313
+
+In [19]: car2 = car/sum1
+
+In [20]: car2
+Out[20]: 0.86904953520826567
+
+In [21]: frog2  = frog/sum1
+
+In [22]: frog2
+Out[22]: 0.0009679257745610439
+
+In [24]: -np.log(cat2)
+Out[24]: 2.0402208285265546
+</code></pre>
+
+<p><mark>需要注意的是log是以e为底数的，上面图片的来源CS231n的公开课用的PPT的结果是错误的</mark></p>
 
 			</div>
 
@@ -149,7 +188,7 @@ $(document).ready(function(event) {
 	    <p class="meta">
 	    
 	        <a class="basic-alignment left" href="14941641082907.html" 
-	        title="Previous Post: 激活函数">&laquo; 激活函数</a>
+	        title="Previous Post: Activation function 激活函数">&laquo; Activation function 激活函数</a>
 	    
 	    
 	        <a class="basic-alignment right" href="14928433858430.html" 
@@ -173,7 +212,7 @@ $(document).ready(function(event) {
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(3)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -191,6 +230,12 @@ $(document).ready(function(event) {
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="14997729082239.html">TensorFlow框架入门</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -217,10 +262,6 @@ $(document).ready(function(event) {
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997578015392.html">Loss Function 损失函数</a>
-		      </li>
-	     
 	  
 	      
 	  
