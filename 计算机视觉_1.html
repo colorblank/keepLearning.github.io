@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  Matplotlib by Example - 尖端追踪指南
+  计算机视觉 - 尖端追踪指南
   
 
   </title>
@@ -78,83 +78,85 @@ $(document).ready(function(event) {
 </nav>
   <div id="main">
     <div id="content"> 
-<div>
-	<article class="hentry" role="article">
-	<header>
-			  	<h1 class="entry-title">Matplotlib by Example</h1>
-				<p class="meta"><time datetime="2017-07-11T15:28:27+08:00" pubdate data-updated="true">2017/7/11</time></p>
-			 </header>
-		  	<div class="entry-content">
-			  	<p>matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。</p>
+<div class="blog-index">
 
-<p>它的文档相当完备，并且 <a href="http://matplotlib.org/gallery.html">Gallery页面 </a>中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。</p>
+	<article>
+		 <header>
+		  	<h1 class="entry-title"><a href="14997580410995.html">人脸检测实例</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:27:21+08:00" 
+			pubdate data-updated="true">2017/7/11</time></p>
+		 </header>
+	  	<div class="entry-content">
+		  	
+		  	<h2 id="toc_0">Code:</h2>
 
-<p>本篇作为matplotlib的入门介绍，将较为深入地挖掘几个例子，从中理解和学习matplotlib绘图的一些基本概念。</p>
+<pre><code class="language-python">#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;
+Created on Sun Apr 23 14:13:01 2017
 
-<h2 id="toc_0">实例一 画圆</h2>
+@author: zhang
+&quot;&quot;&quot;
 
-<pre><code class="language-Python">import matplotlib.pyplot as plt
-circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
-#产生一个原点为（2，1.6），半径为1的圆
-circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
-#产生一个原点为（2，1.6），半径为2的圆
-plt.gca().add_patch(circle1)
-#将圆1添加到坐标轴上
-plt.gca().add_patch(circle2)
-plt.axis(&#39;scaled&#39;)
-#等比例缩放
-plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
-#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
-plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
-#‘bs’是蓝色
-plt.plot([2], [1.6], &#39;g^&#39;)
-plt.axis([-2,6,-2,6])
-plt.title(&#39;circle example&#39;)
-plt.show()
+#import numpy as np
+import cv2
+#from matplotlib import pyplot as plt
+cascade_fn = &#39;/Users/zhang/anaconda/pkgs/opencv-2.4.11-py27_1/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml&#39;
+cascade = cv2.CascadeClassifier(cascade_fn)
+eye_cascade = cv2.CascadeClassifier(&#39;haarcascade_eye.xml&#39;)
+def face_detect(img, cascade):
+     face = cascade.detectMultiScale(gray, scaleFactor=1.3,minNeighbors=5, minSize=(30, 30))
+     
+     return face
+
+
+def eyes_detect(img,eye_cascade):
+    eyes = eye_cascade.detectMultiScale(img)
+    return eyes
+    
+def draw_face(img, rects, color):
+    for x,y,w,h in rects:
+        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
+    
+def draw_eyes(img,eyes,color):
+    for x,y,w,h in eyes:
+        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)  
+    
+if __name__ == &#39;__main__&#39;:
+    color = (0,0,255)#red
+    point1 = ()
+    cap = cv2.VideoCapture(0)
+    while(True):
+        ret, frame = cap.read()
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        rectangle = face_detect(gray,cascade)
+        draw_face(frame,rectangle,color)
+        
+        eyes = eyes_detect(gray,eye_cascade)
+        draw_eyes(frame,eyes,(255,0,0))
+        cv2.imshow(&#39;frame&#39;,frame)
+        if cv2.waitKey(25) &amp; 0xFF == ord(&#39;q&#39;):
+            break
+    
+    cap.release()
+    cv2.destroyAllWindows()
+    exit()
 </code></pre>
 
-<p>结果如下：</p>
-
-<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
-
-			</div>
-
-		
-	  
-		<footer>
-		 <p class="meta">
-
-			<strong>Categories:</strong>&nbsp; 
-			<span class="categories">
-			
-			    <a class='category' href='Python%E8%BF%9B%E9%98%B6.html'>Python进阶</a>&nbsp;
-			 
-			</span>
-		    </p>
-		    <p class="meta">
-		      
-		 </p>
-	    
-		<div class="sharing">
-		  
-          
-
-          
 
 		</div>
 
-	    <p class="meta">
-	    
-	        <a class="basic-alignment left" href="14997581396138.html" 
-	        title="Previous Post: numpy常见函数">&laquo; numpy常见函数</a>
-	    
-	    
-	        <a class="basic-alignment right" href="14997580410995.html" 
-	        title="Next Post: 人脸检测实例">人脸检测实例 &raquo;</a>
-	    
-	    </p>
-	  </footer>
+		
+
 	</article>
+  
+	<div class="pagination">
+	
+<a href="archives.html">Blog Archives</a>
+	 <a class="next" href="计算机视觉.html">Newer &rarr;</a>  
+	    
+	</div>
 </div>
  <aside class="sidebar"> 
 

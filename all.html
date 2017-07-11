@@ -6,20 +6,20 @@
 <head>
   <meta charset="utf-8">
   <title>
-  
-  
+    
+  尖端追踪指南
   
 
   </title>
   <meta name="author" content="">
-  <meta name="description" content="">
+  <meta name="description" content="专注于深度学习、机器学习、人脸识别的学习研究">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <link href="asset/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="atom.xml" rel="alternate" title="" type="application/atom+xml">
+  <link href="atom.xml" rel="alternate" title="尖端追踪指南" type="application/atom+xml">
   <script src="asset/js/modernizr-2.0.js"></script>
   <script src="asset/js/jquery.min.js"></script>
   <script src="asset/highlightjs/highlight.pack.js"></script>
@@ -48,9 +48,9 @@ $(document).ready(function(event) {
 </script>
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="index.html"></a></h1>
+  <h1><a href="index.html">尖端追踪指南</a></h1>
   
-    <h2></h2>
+    <h2>专注于深度学习、机器学习、人脸识别的学习研究</h2>
   
 </hgroup>
 
@@ -82,7 +82,7 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581969251.html">Opencv入门</a></h1>
+		  	<h1 class="entry-title"><a href="14997581969251.html">Opencv</a></h1>
 			<p class="meta"><time datetime="2017-07-11T15:29:56+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
@@ -338,504 +338,9 @@ cv2.destroyAllWindows()
 		
 
 	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">tile函数</h2>
-
-<ul>
-<li><p>Parameters（参数）</p>
-
-<p>A : array_like<br/>
-    The input array.<br/>
-    输入参数是数组</p>
-
-<p>reps : array_like<br/>
-    The number of repetitions of <code>A</code> along each axis.<br/>
-    重复reps次</p></li>
-<li><p>Returns<br/>
-c : ndarray<br/>
-    The tiled output array.</p></li>
-</ul>
-
-<h3 id="toc_1">Examples</h3>
-
-<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
-     &gt;&gt;&gt; np.tile(a, 2)
-    array([0, 1, 2, 0, 1, 2])
-    #数组a的内容重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 2))
-    array([[0, 1, 2, 0, 1, 2],
-       [0, 1, 2, 0, 1, 2]])
-       #数组a的内容在行方向上重复2次，列方向上重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
-    array([[[0, 1, 2, 0, 1, 2]],
-       [[0, 1, 2, 0, 1, 2]]])
-       ==可在三维上重复==
-    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
-    &gt;&gt;&gt; np.tile(b, 2)
-    array([[1, 2, 1, 2],
-       [3, 4, 3, 4]])
-    &gt;&gt;&gt; np.tile(b, (2, 1))
-    array([[1, 2],
-       [3, 4],
-       [1, 2],
-       [3, 4]])
-    &gt;&gt;&gt; c = np.array([1,2,3,4])
-    &gt;&gt;&gt; np.tile(c,(4,1))
-    array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
-</code></pre>
-
-<h2 id="toc_2">zeros函数</h2>
-
-<blockquote>
-<blockquote>
-<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
-</blockquote>
-</blockquote>
-
-<p>Return a new array of given shape and type, filled with zeros.<br/>
-根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
-
-<h3 id="toc_3">examples</h3>
-
-<pre><code>&gt;&gt;np.zeros(5)
-array([ 0., 0., 0., 0., 0.])
-&gt;&gt;
-np.zeros((5,), dtype=np.int)
-array([0, 0, 0, 0, 0])
-&gt;&gt;
-np.zeros((2, 1))
-array([[ 0.], [ 0.]])
-&gt;&gt;
-s = (2,2)
-np.zeros(s)
-np.zeros(s)
-array([[ 0., 0.], [ 0., 0.]])
-&gt;&gt;
-np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
-</code></pre>
-
-<h2 id="toc_4">dot函数</h2>
-
-<blockquote>
-<p>numpy.dot(a, b, out=None)</p>
-</blockquote>
-
-<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
-
-<h3 id="toc_5">examples</h3>
-
-<pre><code>&gt;&gt;&gt; np.dot(3, 4)
-12
-
-
-&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
-(-13+0j)
-
-
-&gt;&gt;&gt; a = [[1, 0], [0, 1]]
-&gt;&gt;&gt; b = [[4, 1], [2, 2]]
-&gt;&gt;&gt; np.dot(a, b)
-array([[4, 1],
-   [2, 2]])
-</code></pre>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14997581073792.html">Matplotlib by Example</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:27+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。</p>
-
-<p>它的文档相当完备，并且 <a href="http://matplotlib.org/gallery.html">Gallery页面 </a>中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。</p>
-
-<p>本篇作为matplotlib的入门介绍，将较为深入地挖掘几个例子，从中理解和学习matplotlib绘图的一些基本概念。</p>
-
-<h2 id="toc_0">实例一 画圆</h2>
-
-<pre><code class="language-Python">import matplotlib.pyplot as plt
-circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
-#产生一个原点为（2，1.6），半径为1的圆
-circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
-#产生一个原点为（2，1.6），半径为2的圆
-plt.gca().add_patch(circle1)
-#将圆1添加到坐标轴上
-plt.gca().add_patch(circle2)
-plt.axis(&#39;scaled&#39;)
-#等比例缩放
-plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
-#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
-plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
-#‘bs’是蓝色
-plt.plot([2], [1.6], &#39;g^&#39;)
-plt.axis([-2,6,-2,6])
-plt.title(&#39;circle example&#39;)
-plt.show()
-</code></pre>
-
-<p>结果如下：</p>
-
-<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14997580410995.html">人脸检测实例</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:27:21+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">Code:</h2>
-
-<pre><code class="language-python">#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-&quot;&quot;&quot;
-Created on Sun Apr 23 14:13:01 2017
-
-@author: zhang
-&quot;&quot;&quot;
-
-#import numpy as np
-import cv2
-#from matplotlib import pyplot as plt
-cascade_fn = &#39;/Users/zhang/anaconda/pkgs/opencv-2.4.11-py27_1/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml&#39;
-cascade = cv2.CascadeClassifier(cascade_fn)
-eye_cascade = cv2.CascadeClassifier(&#39;haarcascade_eye.xml&#39;)
-def face_detect(img, cascade):
-     face = cascade.detectMultiScale(gray, scaleFactor=1.3,minNeighbors=5, minSize=(30, 30))
-     
-     return face
-
-
-def eyes_detect(img,eye_cascade):
-    eyes = eye_cascade.detectMultiScale(img)
-    return eyes
-    
-def draw_face(img, rects, color):
-    for x,y,w,h in rects:
-        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
-    
-def draw_eyes(img,eyes,color):
-    for x,y,w,h in eyes:
-        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)  
-    
-if __name__ == &#39;__main__&#39;:
-    color = (0,0,255)#red
-    point1 = ()
-    cap = cv2.VideoCapture(0)
-    while(True):
-        ret, frame = cap.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        rectangle = face_detect(gray,cascade)
-        draw_face(frame,rectangle,color)
-        
-        eyes = eyes_detect(gray,eye_cascade)
-        draw_eyes(frame,eyes,(255,0,0))
-        cv2.imshow(&#39;frame&#39;,frame)
-        if cv2.waitKey(25) &amp; 0xFF == ord(&#39;q&#39;):
-            break
-    
-    cap.release()
-    cv2.destroyAllWindows()
-    exit()
-</code></pre>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14997578015392.html">Loss Function 损失函数</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:23:21+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
-
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
-
-<p>损失函数的值越小，越接近真实值。</p>
-
-<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
-
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
-
-<blockquote>
-<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
-</blockquote>
-
-<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
-
-<p>上图中第一列的损失值计算方法如下：</p>
-
-<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
-     =2.9
-</code></pre>
-
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
-
-<p>它的公式如下：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
-
-<h2 id="toc_1">Softmax 函数</h2>
-
-<blockquote>
-</blockquote>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14941641082907.html">激活函数</a></h1>
-			<p class="meta"><time datetime="2017-05-07T21:35:08+08:00" 
-			pubdate data-updated="true">2017/5/7</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">定义</h2>
-
-<p><a href="https://en.wikipedia.org/wiki/Activation_function">以下是来自维基百科的激活函数的定义</a></p>
-
-<blockquote>
-<blockquote>
-<p>the activation function of a node defines the output of that node given an input or set of inputs. A standard computer chip circuit can be seen as a digital network of activation functions that can be &quot;ON&quot; (1) or &quot;OFF&quot; (0), depending on input. This is similar to the behavior of the linear perceptron in neural networks. However, it is the nonlinear activation function that allows such networks to compute nontrivial problems using only a small number of nodes. In artificial neural networks this function is also called the transfer function.</p>
-</blockquote>
-</blockquote>
-
-<p>大意是：在 计算网络中， 一个节点的激活函数定义了该节点在给定的输入或输入的集合下的输出。标准的计算机芯片电路可以看作是根据输入得到&quot;开&quot;(1)或&quot;关&quot;(0)输出的数字网络激活函数。这与神经网络中的线性感知机的行为类似。</p>
-
-<p>好吧！上述的激活函数和神经网络没有什么关系。用神经元的角度解释比较好。</p>
-
-<p>在神经元的数学模型中，轴突所携带的信号(例如：x0)通过突触进行传递，由于突触的强弱不一，假设我们以w0表示，那么我们传到下一个神经元的树突处的信号就变成了w0x0。其中突触强弱(参数w)是可学的，它控制了一个神经元对另一个神经元影响的大小和方向（正负）。然后树突接收到信号后传递到神经元内部(cell body)，与其他树突传递过来的信号一起进行加和，如果这个和的值大于某一个固定的阈值的话，神经元就会被激活，然后传递冲激信号给树突。在数学模型中我们假设传递冲激信号的时间长短并不重要，只有神经元被激活的频率用于传递信息。我们将是否激活神经元的函数称为激活函数(activation function f)，它代表了轴突接收到冲激信号的频率。</p>
-
-<h2 id="toc_1">作用</h2>
-
-<p>很多人解释激活函数就说：激活函数的作用是能够给神经网络加入一些非线性因素，使得神经网络可以更好地解决较为复杂的问题。其实并不准确，正如上述的定义，它决定了神经元是否参与工作（是否被激活），从数据角度来看，即输入的数据是否被保留。然后，由于神经网络的特性（分类的数据往往非线性），研究人员采用了非线性的函数进行分类。</p>
-
-<h2 id="toc_2">常见函数</h2>
-
-<h3 id="toc_3">sigmoid函数</h3>
-
-<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.40.06.png" alt="屏幕快照 2017-07-11 下午2.40.06"/></p>
-
-<h3 id="toc_4">tanh函数</h3>
-
-<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.41.20.png" alt="屏幕快照 2017-07-11 下午2.41.20"/></p>
-
-<h3 id="toc_5">ReLU函数</h3>
-
-<p>A(x) = max(0,x)<br/>
-<img src="media/14941641082907/Rectifier_and_softplus_functions.svg.png" alt="Rectifier_and_softplus_functions.svg"/></p>
-
-<p>上图蓝色线条的就是ReLU函数</p>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14941558480316.html">Loss Function 损失函数</a></h1>
-			<p class="meta"><time datetime="2017-05-07T19:17:28+08:00" 
-			pubdate data-updated="true">2017/5/7</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
-
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
-
-<p>损失函数的值越小，越接近真实值。</p>
-
-<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
-
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
-
-<blockquote>
-<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
-</blockquote>
-
-<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
-
-<p>上图中第一列的损失值计算方法如下：</p>
-
-<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
-     =2.9
-</code></pre>
-
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
-
-<p>它的公式如下：</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
-
-<h2 id="toc_1">Softmax 函数</h2>
-
-<blockquote>
-</blockquote>
-
-
-		</div>
-
-		
-
-	</article>
- 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="14928433858430.html">线性分类器 linear classify</a></h1>
-			<p class="meta"><time datetime="2017-04-22T14:43:05+08:00" 
-			pubdate data-updated="true">2017/4/22</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<ul>
-<li>
-<a href="#toc_0">k近邻算法</a>
-</li>
-<li>
-<a href="#toc_1">代码</a>
-</li>
-</ul>
-
-
-<h2 id="toc_0">k近邻算法</h2>
-
-<p>k近邻算法属于监督学习的范围，即通过输入参数和训练样本的“比较”，对输入的参数进行分类。<br/>
- 举个现实的例子，给《非诚勿扰》的女嘉宾打分。打分必须有一个标准，例如以肤色、身高两个为标准进行打分。而怎样的肤色和身高才算漂亮？<br/>
- 首先，我们将肤色设置为从 1 到 10的级别，对应现实中从白到黑的肤色等级，身高也是类似；然后我们就必须给定一个根据肤色和身高对应的漂亮级别，如：A级美女（最漂亮的）、B级美女...这就形成了，肤色、身高、美丽级数这样的三个属性的表，而且表中有很很多已知参数，类似下表。</p>
-
-<table>
-<thead>
-<tr>
-<th>肤色</th>
-<th>身高</th>
-<th>美丽级数</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>3</td>
-<td>165</td>
-<td>A</td>
-</tr>
-<tr>
-<td>6</td>
-<td>170</td>
-<td>B</td>
-</tr>
-<tr>
-<td>2</td>
-<td>160</td>
-<td>A</td>
-</tr>
-<tr>
-<td>5</td>
-<td>179</td>
-<td>B</td>
-</tr>
-</tbody>
-</table>
-
-<p>最终，根据评分的标准，将某一个女嘉宾的数据输入，得到距离女嘉宾数据最近的美丽等级。由于女嘉宾数据并不一定和表中数据完全相同，且上述表只是参考，我们提出一个划分范围（即k）。根据k的取值，我们得出的结果有可能不同。<br/>
- 即女嘉宾甲处在A级美女和B级美女的交接处，如果k=1，那么她可能归为A级，但k=2,她可能归为B级。<br/>
-因此，在实际应用中，k的取值往往需要不断试验得出。如图：</p>
-
-<p><img src="media/14928433858430/figure_1.png" alt="figure_1"/></p>
-
-<h2 id="toc_1">代码</h2>
-
-<ul>
-<li>第一个分类器函数</li>
-</ul>
-
-<pre><code class="language-python">def classify0(inX, dataSet, labels, k):
-    #inX是用于分类的输入向量(即未知量)
-    #dataSet是输入的训练样本集
-    #labels是标签向量（返回值在标签向量中选择)
-    #k是用于选择最近邻居的数目
-    dataSetSize = dataSet.shape[0]
-
-#shape[0]返回数组的行数
-    diffMat = tile(inX, (dataSetSize,1)) - dataSet
-
-#将inX扩充为和训练样本数组相同大小
-    sqDiffMat = diffMat**2
-    sqDistances = sqDiffMat.sum(axis=1)
-    #sum(axis = 1)返回每一行的和
-    distances = sqDistances**0.5
-    sortedDistIndicies = distances.argsort()   
-    #返回的是数组值从小到大的索引值,是数组类型的
-    classCount={}
-    #生成一个字典          
-    for i in range(k):
-        voteIlabel = labels[sortedDistIndicies[i]]
-        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
-#dict.get(key, default=None)
-#返回指定键的值，如果值不在字典中返回default值
-#在前k个最近的数据点中，对应标签的内容和数目，即距离输入量最近的类别A,类别B等的数目
-    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
-    #根据字典内值得大小对字典进行排序，reverse=True是降序
-    return sortedClassCount[0][0]
-</code></pre>
-
-
-		</div>
-
-		
-
-	</article>
   
 	<div class="pagination">
-	
+	 <a class="prev" href="all_1.html">&larr; Older</a> 
 <a href="archives.html">Blog Archives</a>
 	 
 	    
@@ -876,7 +381,7 @@ if __name__ == &#39;__main__&#39;:
 	  
 	      
 		      <li class="post">
-		        <a href="14997581969251.html">Opencv入门</a>
+		        <a href="14997581969251.html">Opencv</a>
 		      </li>
 	     
 	  

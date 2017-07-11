@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  Matplotlib by Example - 尖端追踪指南
+  尖端追踪指南
   
 
   </title>
@@ -78,83 +78,64 @@ $(document).ready(function(event) {
 </nav>
   <div id="main">
     <div id="content"> 
-<div>
-	<article class="hentry" role="article">
-	<header>
-			  	<h1 class="entry-title">Matplotlib by Example</h1>
-				<p class="meta"><time datetime="2017-07-11T15:28:27+08:00" pubdate data-updated="true">2017/7/11</time></p>
-			 </header>
-		  	<div class="entry-content">
-			  	<p>matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。</p>
+<div class="blog-index">
 
-<p>它的文档相当完备，并且 <a href="http://matplotlib.org/gallery.html">Gallery页面 </a>中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。</p>
+	<article>
+		 <header>
+		  	<h1 class="entry-title"><a href="14941558480316.html">Loss Function 损失函数</a></h1>
+			<p class="meta"><time datetime="2017-05-07T19:17:28+08:00" 
+			pubdate data-updated="true">2017/5/7</time></p>
+		 </header>
+	  	<div class="entry-content">
+		  	
+		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
 
-<p>本篇作为matplotlib的入门介绍，将较为深入地挖掘几个例子，从中理解和学习matplotlib绘图的一些基本概念。</p>
+<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
 
-<h2 id="toc_0">实例一 画圆</h2>
+<p>损失函数的值越小，越接近真实值。</p>
 
-<pre><code class="language-Python">import matplotlib.pyplot as plt
-circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
-#产生一个原点为（2，1.6），半径为1的圆
-circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
-#产生一个原点为（2，1.6），半径为2的圆
-plt.gca().add_patch(circle1)
-#将圆1添加到坐标轴上
-plt.gca().add_patch(circle2)
-plt.axis(&#39;scaled&#39;)
-#等比例缩放
-plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
-#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
-plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
-#‘bs’是蓝色
-plt.plot([2], [1.6], &#39;g^&#39;)
-plt.axis([-2,6,-2,6])
-plt.title(&#39;circle example&#39;)
-plt.show()
+<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
+
+<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
+
+<blockquote>
+<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
+</blockquote>
+
+<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
+
+<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
+
+<p>上图中第一列的损失值计算方法如下：</p>
+
+<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
+     =2.9
 </code></pre>
 
-<p>结果如下：</p>
+<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
 
-<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
+<p>它的公式如下：</p>
 
-			</div>
+<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
 
-		
-	  
-		<footer>
-		 <p class="meta">
+<h2 id="toc_1">Softmax 函数</h2>
 
-			<strong>Categories:</strong>&nbsp; 
-			<span class="categories">
-			
-			    <a class='category' href='Python%E8%BF%9B%E9%98%B6.html'>Python进阶</a>&nbsp;
-			 
-			</span>
-		    </p>
-		    <p class="meta">
-		      
-		 </p>
-	    
-		<div class="sharing">
-		  
-          
+<blockquote>
+</blockquote>
 
-          
 
 		</div>
 
-	    <p class="meta">
-	    
-	        <a class="basic-alignment left" href="14997581396138.html" 
-	        title="Previous Post: numpy常见函数">&laquo; numpy常见函数</a>
-	    
-	    
-	        <a class="basic-alignment right" href="14997580410995.html" 
-	        title="Next Post: 人脸检测实例">人脸检测实例 &raquo;</a>
-	    
-	    </p>
-	  </footer>
+		
+
 	</article>
+  
+	<div class="pagination">
+	 <a class="prev" href="all_7.html">&larr; Older</a> 
+<a href="archives.html">Blog Archives</a>
+	 <a class="next" href="all_5.html">Newer &rarr;</a>  
+	    
+	</div>
 </div>
  <aside class="sidebar"> 
 
