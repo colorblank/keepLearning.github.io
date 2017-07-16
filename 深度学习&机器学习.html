@@ -204,6 +204,47 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 #结果：0.9208
 </code></pre>
 
+<pre><code>In [6]: correct_prediction
+Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
+</code></pre>
+
+<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
+
+<pre><code>In [8]: accuracy
+Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
+</code></pre>
+
+<pre><code>In [10]: accuracy.eval?
+Signature: accuracy.eval(feed_dict=None, session=None)
+Docstring:
+
+Evaluates this tensor in a `Session`.
+
+Calling this method will execute all preceding operations that
+produce the inputs needed for the operation that produces this
+tensor.
+
+*N.B.* Before invoking `Tensor.eval()`, its graph must have been
+launched in a session, and either a default session must be
+available, or `session` must be specified explicitly.
+
+Args:
+  feed_dict: A dictionary that maps `Tensor` objects to feed values.
+    See @{tf.Session.run} for a
+    description of the valid feed values.
+  session: (Optional.) The `Session` to be used to evaluate this tensor. If
+    none, the default session will be used.
+
+Returns:
+  A numpy array corresponding to the value of this tensor.
+File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
+Type:      instancemethod
+
+
+</code></pre>
+
+<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
+
 <p>8.代码总结</p>
 
 <pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
