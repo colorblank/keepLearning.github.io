@@ -84,48 +84,195 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14941641082907.html">Activation function 激活函数</a></h1>
-			<p class="meta"><time datetime="2017-05-07T21:35:08+08:00" 
-			pubdate data-updated="true">2017/5/7</time></p>
+		  	<h1 class="entry-title"><a href="14997729082239.html">TensorFlow框架入门</a></h1>
+			<p class="meta"><time datetime="2017-07-11T19:35:08+08:00" 
+			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">定义</h2>
+		  	<h2 id="toc_0">1.采用MNIST数据集实现单层线性分类模型</h2>
 
-<p><a href="https://en.wikipedia.org/wiki/Activation_function">以下是来自维基百科的激活函数的定义</a></p>
+<p>环境：Python 2.7.13 + TensorFlow 1.2.1<br/>
+系统：macos</p>
 
-<blockquote>
-<blockquote>
-<p>the activation function of a node defines the output of that node given an input or set of inputs. A standard computer chip circuit can be seen as a digital network of activation functions that can be &quot;ON&quot; (1) or &quot;OFF&quot; (0), depending on input. This is similar to the behavior of the linear perceptron in neural networks. However, it is the nonlinear activation function that allows such networks to compute nontrivial problems using only a small number of nodes. In artificial neural networks this function is also called the transfer function.</p>
-</blockquote>
-</blockquote>
+<p>MNIST是手写数字的图像数据集，常用于机器学习的训练。</p>
 
-<p>大意是：在 计算网络中， 一个节点的激活函数定义了该节点在给定的输入或输入的集合下的输出。标准的计算机芯片电路可以看作是根据输入得到&quot;开&quot;(1)或&quot;关&quot;(0)输出的数字网络激活函数。这与神经网络中的线性感知机的行为类似。</p>
+<h3 id="toc_1">加载MNIST数据集</h3>
 
-<p>好吧！上述的激活函数和神经网络没有什么关系。用神经元的角度解释比较好。</p>
+<p>Python命令行（建议用ipython）执行以下命令：</p>
 
-<p>在神经元的数学模型中，轴突所携带的信号(例如：x0)通过突触进行传递，由于突触的强弱不一，假设我们以w0表示，那么我们传到下一个神经元的树突处的信号就变成了w0x0。其中突触强弱(参数w)是可学的，它控制了一个神经元对另一个神经元影响的大小和方向（正负）。然后树突接收到信号后传递到神经元内部(cell body)，与其他树突传递过来的信号一起进行加和，如果这个和的值大于某一个固定的阈值的话，神经元就会被激活，然后传递冲激信号给树突。在数学模型中我们假设传递冲激信号的时间长短并不重要，只有神经元被激活的频率用于传递信息。我们将是否激活神经元的函数称为激活函数(activation function f)，它代表了轴突接收到冲激信号的频率。</p>
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
+</code></pre>
 
-<h2 id="toc_1">作用</h2>
+<p>以下表示MNIST数据集加载成功：</p>
 
-<p>很多人解释激活函数就说：激活函数的作用是能够给神经网络加入一些非线性因素，使得神经网络可以更好地解决较为复杂的问题。其实并不准确，正如上述的定义，它决定了神经元是否参与工作（是否被激活），从数据角度来看，即输入的数据是否被保留。然后，由于神经网络的特性（分类的数据往往非线性），研究人员采用了非线性的函数进行分类。</p>
+<pre><code class="language-shell">Extracting MNIST_data/train-images-idx3-ubyte.gz
+Extracting MNIST_data/train-labels-idx1-ubyte.gz
+Extracting MNIST_data/t10k-images-idx3-ubyte.gz
+Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
 
-<h2 id="toc_2">常见函数</h2>
+</code></pre>
 
-<h3 id="toc_3">1.sigmoid函数</h3>
+<h3 id="toc_2">启动TensorFlow InteractiveSession</h3>
 
-<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.40.06.png" alt="屏幕快照 2017-07-11 下午2.40.06"/></p>
+<p>TensorFlow程序的常见用法是首先创建一个图形，然后在会话中启动它。如下：</p>
 
-<h3 id="toc_4">2.tanh函数</h3>
+<pre><code class="language-Python">import tensorflow as tf
+matrix1 = tf.constant([[3., 3]])
+matrix2 = tf.constant([[2.], [2.]])
+product = tf.matmul(matrix1, matrix2)
+sess= tf.Session()
+result = sess.run(product)
+print result
+sess.close()
+</code></pre>
 
-<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.41.20.png" alt="屏幕快照 2017-07-11 下午2.41.20"/></p>
+<p>而在较为复杂的模型当中，可以采用InteractiveSession类。因为它允许在运行图的时候插入计算图。这使得编程更加灵活。如下：</p>
 
-<h3 id="toc_5">3.ReLU函数</h3>
+<pre><code class="language-Python">import tensorflow as tf
+sess = tf.InteractiveSession()
+</code></pre>
 
-<p>A(x) = max(0,x)<br/>
-<img src="media/14941641082907/Rectifier_and_softplus_functions.svg.png" alt="Rectifier_and_softplus_functions.svg"/></p>
+<p><mark>注意：Mac可能会遇到如下提示，但不影响使用，请直接忽略</mark></p>
 
-<p>上图蓝色线条的就是ReLU函数</p>
+<pre><code>2017-07-13 14:34:56.142538: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142569: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142579: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142589: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+</code></pre>
+
+<h3 id="toc_3">建立一个Softmax回归模型</h3>
+
+<ol>
+<li>占位符</li>
+</ol>
+
+<p>我们需要一个输入图像（矩阵类型）和目标输出类（一般是数字，以向量或矩阵形式展现）创建节点来开始构建计算图</p>
+
+<pre><code class="language-Python">x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+</code></pre>
+
+<ul>
+<li>tf.placeholder代表占位符，在数学角度可以理解为未知量</li>
+<li>shape代表矩阵的形状，第一个参数为None代表第一个维度未知，在这个模型中代表图片的数量；第二个参数是图片28*28像素构成的单一MNIST图片平铺而成的维度</li>
+<li>y_在这个模型中代表图片对应的数字，即正确结果。它也是一个二维矩阵，行数代表图片数量，每一行有十个数，代表对应数字。</li>
+</ul>
+
+<p>2.变量</p>
+
+<p>我们现在定义模型的权重W和偏置b。W和b的类型是Variable，即变量。因为我们需要的是不断地调整这两个变量，使得输出量和目标量相同。（简单地说，就是不断调整参数，使得计算机判断图片代表的数字是正确的）。</p>
+
+<pre><code class="language-Python">W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
+</code></pre>
+
+<ul>
+<li>W是784*10的矩阵，矩阵元素全部为零</li>
+<li>b是10*1的矩阵，矩阵元素全部为零</li>
+</ul>
+
+<p>3.变量的初始化</p>
+
+<pre><code class="language-Python">sess.run(tf.global_variables_initializer())
+</code></pre>
+
+<p>4.预测类和损失函数</p>
+
+<pre><code class="language-python">y = tf.matmul(x,W) + b
+
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+</code></pre>
+
+<p>5.训练模型</p>
+
+<pre><code class="language-python">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+</code></pre>
+
+<p>6.评估模型</p>
+
+<pre><code class="language-python">correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+#结果：0.9208
+</code></pre>
+
+<pre><code>In [6]: correct_prediction
+Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
+</code></pre>
+
+<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
+
+<pre><code>In [8]: accuracy
+Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
+</code></pre>
+
+<pre><code>In [10]: accuracy.eval?
+Signature: accuracy.eval(feed_dict=None, session=None)
+Docstring:
+
+Evaluates this tensor in a `Session`.
+
+Calling this method will execute all preceding operations that
+produce the inputs needed for the operation that produces this
+tensor.
+
+*N.B.* Before invoking `Tensor.eval()`, its graph must have been
+launched in a session, and either a default session must be
+available, or `session` must be specified explicitly.
+
+Args:
+  feed_dict: A dictionary that maps `Tensor` objects to feed values.
+    See @{tf.Session.run} for a
+    description of the valid feed values.
+  session: (Optional.) The `Session` to be used to evaluate this tensor. If
+    none, the default session will be used.
+
+Returns:
+  A numpy array corresponding to the value of this tensor.
+File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
+Type:      instancemethod
+
+
+</code></pre>
+
+<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
+
+<p>8.代码总结</p>
+
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
+import tensorflow as tf
+
+sess = tf.InteractiveSession()
+
+x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
+sess.run(tf.global_variables_initializer())
+y = tf.matmul(x,W) + b
+
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+</code></pre>
 
 
 		</div>
@@ -155,7 +302,7 @@ $(document).ready(function(event) {
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(4)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(5)</strong></a>
 	        
 	        
 	        
@@ -173,6 +320,12 @@ $(document).ready(function(event) {
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="15002529995550.html">TensorFlow算法实现流程</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -199,10 +352,6 @@ $(document).ready(function(event) {
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997580410995.html">人脸检测实例</a>
-		      </li>
-	     
 	  
 	      
 	  

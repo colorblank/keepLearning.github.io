@@ -84,95 +84,48 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14941558480316.html">Loss Function 损失函数</a></h1>
-			<p class="meta"><time datetime="2017-05-07T19:17:28+08:00" 
+		  	<h1 class="entry-title"><a href="14941641082907.html">Activation function 激活函数</a></h1>
+			<p class="meta"><time datetime="2017-05-07T21:35:08+08:00" 
 			pubdate data-updated="true">2017/5/7</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
+		  	<h2 id="toc_0">定义</h2>
 
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。<mark>损失函数的值越小，越接近真实值。</mark></p>
-
-<p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
-
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失 （SVM Loss）</h2>
+<p><a href="https://en.wikipedia.org/wiki/Activation_function">以下是来自维基百科的激活函数的定义</a></p>
 
 <blockquote>
-<p>As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
-</blockquote>
-
-<p>以上是来自斯坦福cs231n课程里的notes。</p>
-
-<p>百度百科对支持向量机SVM的定义如下</p>
-
 <blockquote>
-<p>SVM的主要思想可以概括为两点：<br/>
-1.它是针对线性可分情况进行分析，对于线性不可分的情况，通过使用非线性映射算法将低维输入空间线性不可分的样本转化为高维特征空间使其线性可分，从而使得高维特征空间采用线性算法对样本的非线性特征进行线性分析成为可能。<br/>
-2.它基于结构风险最小化理论之上再特征空间中构建最优超平面，使得学习器得到全局最优化，并且在整个样本空间的期望以某个概率满足一定上界。</p>
+<p>the activation function of a node defines the output of that node given an input or set of inputs. A standard computer chip circuit can be seen as a digital network of activation functions that can be &quot;ON&quot; (1) or &quot;OFF&quot; (0), depending on input. This is similar to the behavior of the linear perceptron in neural networks. However, it is the nonlinear activation function that allows such networks to compute nontrivial problems using only a small number of nodes. In artificial neural networks this function is also called the transfer function.</p>
+</blockquote>
 </blockquote>
 
-<p>在图像分类中，图像分类的结果是一个列向量，如下图：</p>
+<p>大意是：在 计算网络中， 一个节点的激活函数定义了该节点在给定的输入或输入的集合下的输出。标准的计算机芯片电路可以看作是根据输入得到&quot;开&quot;(1)或&quot;关&quot;(0)输出的数字网络激活函数。这与神经网络中的线性感知机的行为类似。</p>
 
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
+<p>好吧！上述的激活函数和神经网络没有什么关系。用神经元的角度解释比较好。</p>
 
-<p>上图中第一列的损失值计算方法如下：</p>
+<p>在神经元的数学模型中，轴突所携带的信号(例如：x0)通过突触进行传递，由于突触的强弱不一，假设我们以w0表示，那么我们传到下一个神经元的树突处的信号就变成了w0x0。其中突触强弱(参数w)是可学的，它控制了一个神经元对另一个神经元影响的大小和方向（正负）。然后树突接收到信号后传递到神经元内部(cell body)，与其他树突传递过来的信号一起进行加和，如果这个和的值大于某一个固定的阈值的话，神经元就会被激活，然后传递冲激信号给树突。在数学模型中我们假设传递冲激信号的时间长短并不重要，只有神经元被激活的频率用于传递信息。我们将是否激活神经元的函数称为激活函数(activation function f)，它代表了轴突接收到冲激信号的频率。</p>
 
-<pre><code>loss = max((5.1 - 3.2) + 1, 0)+ max((-1.7 - 3.2) + 1, 0)
-     =2.9
-</code></pre>
+<h2 id="toc_1">作用</h2>
 
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。</p>
+<p>很多人解释激活函数就说：激活函数的作用是能够给神经网络加入一些非线性因素，使得神经网络可以更好地解决较为复杂的问题。其实并不准确，正如上述的定义，它决定了神经元是否参与工作（是否被激活），从数据角度来看，即输入的数据是否被保留。然后，由于神经网络的特性（分类的数据往往非线性），研究人员采用了非线性的函数进行分类。</p>
 
-<p>这些分类结果通过SVM损失函数后，会得到一个损失的值，而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
+<h2 id="toc_2">常见函数</h2>
 
-<p>它的公式如下：</p>
+<h3 id="toc_3">1.sigmoid函数</h3>
 
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
+<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.40.06.png" alt="屏幕快照 2017-07-11 下午2.40.06"/></p>
 
-<h2 id="toc_1">Softmax 函数</h2>
+<h3 id="toc_4">2.tanh函数</h3>
 
-<p>公式如下：<br/>
-<img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%887.54.47.png" alt="屏幕快照 2017-07-11 下午7.54.47"/></p>
+<p><img src="media/14941641082907/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%882.41.20.png" alt="屏幕快照 2017-07-11 下午2.41.20"/></p>
 
-<p>以下图为例，讲解一下Softmax是如何实现的</p>
+<h3 id="toc_5">3.ReLU函数</h3>
 
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%888.36.19.png" alt="屏幕快照 2017-07-11 下午8.36.19"/></p>
+<p>A(x) = max(0,x)<br/>
+<img src="media/14941641082907/Rectifier_and_softplus_functions.svg.png" alt="Rectifier_and_softplus_functions.svg"/></p>
 
-<p>我们用Python来验证一下：</p>
-
-<pre><code>In [1]: import numpy as np
-
-In [12]: cat = np.exp(3.2)
-
-In [13]: car = np.exp(5.1)
-
-In [14]: frog = np.exp(-1.7)
-
-In [15]: sum1 = cat + car + frog 
-#求和，并求概率，即所占比例
-In [16]: sum1
-Out[16]: 188.73712102106381
-In [17]: cat2 = cat/sum1
-
-In [18]: cat2
-Out[18]: 0.12998253901717313
-
-In [19]: car2 = car/sum1
-
-In [20]: car2
-Out[20]: 0.86904953520826567
-
-In [21]: frog2  = frog/sum1
-
-In [22]: frog2
-Out[22]: 0.0009679257745610439
-
-In [24]: -np.log(cat2)
-Out[24]: 2.0402208285265546
-</code></pre>
-
-<p><mark>需要注意的是log是以e为底数的，上面图片的来源CS231n的公开课用的PPT的结果是错误的</mark></p>
+<p>上图蓝色线条的就是ReLU函数</p>
 
 
 		</div>
@@ -202,7 +155,7 @@ Out[24]: 2.0402208285265546
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(4)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(5)</strong></a>
 	        
 	        
 	        
@@ -220,6 +173,12 @@ Out[24]: 2.0402208285265546
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="15002529995550.html">TensorFlow算法实现流程</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -246,10 +205,6 @@ Out[24]: 2.0402208285265546
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997580410995.html">人脸检测实例</a>
-		      </li>
-	     
 	  
 	      
 	  
