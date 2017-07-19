@@ -84,43 +84,115 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581073792.html">Matplotlib by Example</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:27+08:00" 
+		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。</p>
+		  	<h2 id="toc_0">tile函数</h2>
 
-<p>它的文档相当完备，并且 <a href="http://matplotlib.org/gallery.html">Gallery页面 </a>中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。</p>
+<ul>
+<li><p>Parameters（参数）</p>
 
-<p>本篇作为matplotlib的入门介绍，将较为深入地挖掘几个例子，从中理解和学习matplotlib绘图的一些基本概念。</p>
+<p>A : array_like<br/>
+    The input array.<br/>
+    输入参数是数组</p>
 
-<h2 id="toc_0">实例一 画圆</h2>
+<p>reps : array_like<br/>
+    The number of repetitions of <code>A</code> along each axis.<br/>
+    重复reps次</p></li>
+<li><p>Returns<br/>
+c : ndarray<br/>
+    The tiled output array.</p></li>
+</ul>
 
-<pre><code class="language-Python">import matplotlib.pyplot as plt
-circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
-#产生一个原点为（2，1.6），半径为1的圆
-circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
-#产生一个原点为（2，1.6），半径为2的圆
-plt.gca().add_patch(circle1)
-#将圆1添加到坐标轴上
-plt.gca().add_patch(circle2)
-plt.axis(&#39;scaled&#39;)
-#等比例缩放
-plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
-#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
-plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
-#‘bs’是蓝色
-plt.plot([2], [1.6], &#39;g^&#39;)
-plt.axis([-2,6,-2,6])
-plt.title(&#39;circle example&#39;)
-plt.show()
+<h3 id="toc_1">Examples</h3>
+
+<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
+     &gt;&gt;&gt; np.tile(a, 2)
+    array([0, 1, 2, 0, 1, 2])
+    #数组a的内容重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 2))
+    array([[0, 1, 2, 0, 1, 2],
+       [0, 1, 2, 0, 1, 2]])
+       #数组a的内容在行方向上重复2次，列方向上重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
+    array([[[0, 1, 2, 0, 1, 2]],
+       [[0, 1, 2, 0, 1, 2]]])
+       ==可在三维上重复==
+    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
+    &gt;&gt;&gt; np.tile(b, 2)
+    array([[1, 2, 1, 2],
+       [3, 4, 3, 4]])
+    &gt;&gt;&gt; np.tile(b, (2, 1))
+    array([[1, 2],
+       [3, 4],
+       [1, 2],
+       [3, 4]])
+    &gt;&gt;&gt; c = np.array([1,2,3,4])
+    &gt;&gt;&gt; np.tile(c,(4,1))
+    array([[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]])
 </code></pre>
 
-<p>结果如下：</p>
+<h2 id="toc_2">zeros函数</h2>
 
-<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
+<blockquote>
+<blockquote>
+<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
+</blockquote>
+</blockquote>
+
+<p>Return a new array of given shape and type, filled with zeros.<br/>
+根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+
+<h3 id="toc_3">examples</h3>
+
+<pre><code>&gt;&gt;np.zeros(5)
+array([ 0., 0., 0., 0., 0.])
+&gt;&gt;
+np.zeros((5,), dtype=np.int)
+array([0, 0, 0, 0, 0])
+&gt;&gt;
+np.zeros((2, 1))
+array([[ 0.], [ 0.]])
+&gt;&gt;
+s = (2,2)
+np.zeros(s)
+np.zeros(s)
+array([[ 0., 0.], [ 0., 0.]])
+&gt;&gt;
+np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+</code></pre>
+
+<h2 id="toc_4">dot函数</h2>
+
+<blockquote>
+<p>numpy.dot(a, b, out=None)</p>
+</blockquote>
+
+<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+
+<h3 id="toc_5">examples</h3>
+
+<pre><code>&gt;&gt;&gt; np.dot(3, 4)
+12
+
+
+&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+
+
+&gt;&gt;&gt; a = [[1, 0], [0, 1]]
+&gt;&gt;&gt; b = [[4, 1], [2, 2]]
+&gt;&gt;&gt; np.dot(a, b)
+array([[4, 1],
+   [2, 2]])
+</code></pre>
 
 
 		</div>
@@ -150,7 +222,7 @@ plt.show()
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(5)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(6)</strong></a>
 	        
 	        
 	        
@@ -168,6 +240,12 @@ plt.show()
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">神经网络入门</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -194,10 +272,6 @@ plt.show()
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581073792.html">Matplotlib by Example</a>
-		      </li>
-	     
 	  
 	      
 	  

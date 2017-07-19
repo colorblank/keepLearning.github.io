@@ -84,62 +84,102 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="15002529995550.html">TensorFlow算法实现流程</a></h1>
-			<p class="meta"><time datetime="2017-07-17T08:56:39+08:00" 
-			pubdate data-updated="true">2017/7/17</time></p>
+		  	<h1 class="entry-title"><a href="14928433858430.html">线性分类器 linear classify</a></h1>
+			<p class="meta"><time datetime="2017-04-22T14:43:05+08:00" 
+			pubdate data-updated="true">2017/4/22</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>来自TensorFlow Machine Learning Cookbook和自己的一些想法总结。</p>
+		  	<ul>
+<li>
+<a href="#toc_0">k近邻算法</a>
+</li>
+<li>
+<a href="#toc_1">代码</a>
+</li>
+</ul>
 
-<h2 id="toc_0">1.载入或产生数据集</h2>
 
-<h2 id="toc_1">2.转换和标准化数据</h2>
+<h2 id="toc_0">k近邻算法</h2>
 
-<p>将数据转换成符合TensorFlow要求的形式。通常算法会要求数据是标准化形式，我们采用TensorFlow的函数实现标准化：<br/>
-<code>data = tf.nn.batch_norm_with_global_normalization(...)</code></p>
+<p>k近邻算法属于监督学习的范围，即通过输入参数和训练样本的“比较”，对输入的参数进行分类。<br/>
+ 举个现实的例子，给《非诚勿扰》的女嘉宾打分。打分必须有一个标准，例如以肤色、身高两个为标准进行打分。而怎样的肤色和身高才算漂亮？<br/>
+ 首先，我们将肤色设置为从 1 到 10的级别，对应现实中从白到黑的肤色等级，身高也是类似；然后我们就必须给定一个根据肤色和身高对应的漂亮级别，如：A级美女（最漂亮的）、B级美女...这就形成了，肤色、身高、美丽级数这样的三个属性的表，而且表中有很很多已知参数，类似下表。</p>
 
-<p>标准化是统计学概念，用于不同类型数据根据某一标准调整，以方便比较。可以参考维基百科的定义：</p>
+<table>
+<thead>
+<tr>
+<th>肤色</th>
+<th>身高</th>
+<th>美丽级数</th>
+</tr>
+</thead>
 
-<blockquote>
-<p>在统计学以及一些统计学应用领域，标准化有着一系列涵义。[1]举个最简单的例子，率的标准化指的是参照某个标准来调整两组资料的构成使其能够形成参考，比如两者有着不同的尺寸和规格，如果要比较两个总率时，往往按照某个统一的标准（如统一的内部构成）来进行修正，以消除内部构成不同所造成的对结果的影响。[2]</p>
-</blockquote>
+<tbody>
+<tr>
+<td>3</td>
+<td>165</td>
+<td>A</td>
+</tr>
+<tr>
+<td>6</td>
+<td>170</td>
+<td>B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>160</td>
+<td>A</td>
+</tr>
+<tr>
+<td>5</td>
+<td>179</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
 
-<h2 id="toc_2">3.将数据集分割成训练、测试和确认集合</h2>
+<p>最终，根据评分的标准，将某一个女嘉宾的数据输入，得到距离女嘉宾数据最近的美丽等级。由于女嘉宾数据并不一定和表中数据完全相同，且上述表只是参考，我们提出一个划分范围（即k）。根据k的取值，我们得出的结果有可能不同。<br/>
+ 即女嘉宾甲处在A级美女和B级美女的交接处，如果k=1，那么她可能归为A级，但k=2,她可能归为B级。<br/>
+因此，在实际应用中，k的取值往往需要不断试验得出。如图：</p>
 
-<p>训练数据用于训练模型，调整参数；测试数据用于测试模型的准确性；确认数据用于保证到达了最佳参数</p>
+<p><img src="media/14928433858430/figure_1.png" alt="figure_1"/></p>
 
-<h2 id="toc_3">4.设定算法参数</h2>
+<h2 id="toc_1">代码</h2>
 
-<p>在算法中，我们必须人工设定一些参数保证模型正常初始化。例如：学习效率、训练样本大小、迭代次数</p>
+<ul>
+<li>第一个分类器函数</li>
+</ul>
 
-<h2 id="toc_4">5.初始化变量和占位符</h2>
+<pre><code class="language-python">def classify0(inX, dataSet, labels, k):
+    #inX是用于分类的输入向量(即未知量)
+    #dataSet是输入的训练样本集
+    #labels是标签向量（返回值在标签向量中选择)
+    #k是用于选择最近邻居的数目
+    dataSetSize = dataSet.shape[0]
 
-<p>主要输入变量或占位符的数据类型、大小</p>
+#shape[0]返回数组的行数
+    diffMat = tile(inX, (dataSetSize,1)) - dataSet
 
-<h2 id="toc_5">6.定义模型结构</h2>
-
-<p>选择算法模型。可以理解为选择哪个公式，然后用程序语言表达。TensorFlow内置了许多已有的算法框架，根据自身需求构建算法模型。在深度学习中，需要多层的节点连接最后输出，这也是深度学习名字的由来。</p>
-
-<h2 id="toc_6">7.申明损失函数</h2>
-
-<p>损失函数可以告诉我们模型的预测值和真实值的差距。</p>
-
-<h2 id="toc_7">8.初始化并训练模型</h2>
-
-<p>输入数据，计算机根据算法不断调整参数，求得最优解。在TensorFlow中是张量在节点间不断流动。</p>
-
-<h2 id="toc_8">9.评估模型</h2>
-
-<p>用新的数据评估模型。</p>
-
-<h2 id="toc_9">10.调试超参数</h2>
-
-<p>调整初始的超参数（学习效率、训练样本大小），重复上述步骤。</p>
-
-<h2 id="toc_10">11.部署和预测新的数据结果</h2>
-
-<p>对新的数据进行预测。估计是总结经验。</p>
+#将inX扩充为和训练样本数组相同大小
+    sqDiffMat = diffMat**2
+    sqDistances = sqDiffMat.sum(axis=1)
+    #sum(axis = 1)返回每一行的和
+    distances = sqDistances**0.5
+    sortedDistIndicies = distances.argsort()   
+    #返回的是数组值从小到大的索引值,是数组类型的
+    classCount={}
+    #生成一个字典          
+    for i in range(k):
+        voteIlabel = labels[sortedDistIndicies[i]]
+        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
+#dict.get(key, default=None)
+#返回指定键的值，如果值不在字典中返回default值
+#在前k个最近的数据点中，对应标签的内容和数目，即距离输入量最近的类别A,类别B等的数目
+    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    #根据字典内值得大小对字典进行排序，reverse=True是降序
+    return sortedClassCount[0][0]
+</code></pre>
 
 
 		</div>
@@ -149,9 +189,9 @@ $(document).ready(function(event) {
 	</article>
   
 	<div class="pagination">
-	 <a class="prev" href="all_2.html">&larr; Older</a> 
+	
 <a href="archives.html">Blog Archives</a>
-	 <a class="next" href="all.html">Newer &rarr;</a>  
+	 <a class="next" href="all_9.html">Newer &rarr;</a>  
 	    
 	</div>
 </div>

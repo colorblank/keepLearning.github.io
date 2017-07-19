@@ -84,254 +84,194 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581969251.html">Opencv</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:29:56+08:00" 
+		  	<h1 class="entry-title"><a href="14997729082239.html">TensorFlow框架入门</a></h1>
+			<p class="meta"><time datetime="2017-07-11T19:35:08+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<ul>
-<li>
-<a href="#toc_0">图片</a>
-<ul>
-<li>
-<a href="#toc_1">读入图片</a>
-</li>
-<li>
-<a href="#toc_2">显示图片</a>
-</li>
-<li>
-<a href="#toc_3">等待键盘输入</a>
-</li>
-<li>
-<a href="#toc_4">保存图片</a>
-</li>
-<li>
-<a href="#toc_5">删除窗口</a>
-<ul>
-<li>
-<a href="#toc_6">example</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_7">视频</a>
-<ul>
-<li>
-<a href="#toc_8">从摄像头读入视频</a>
-<ul>
-<li>
-<a href="#toc_9">example</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_10">从文件中播放视频</a>
-<ul>
-<li>
-<a href="#toc_11">example</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+		  	<h2 id="toc_0">1.采用MNIST数据集实现单层线性分类模型</h2>
 
+<p>环境：Python 2.7.13 + TensorFlow 1.2.1<br/>
+系统：macos</p>
 
-<h2 id="toc_0">图片</h2>
+<p>MNIST是手写数字的图像数据集，常用于机器学习的训练。</p>
 
-<h3 id="toc_1">读入图片</h3>
+<h3 id="toc_1">加载MNIST数据集</h3>
 
-<p>cv2.imread(&#39;dir/xxx.jpg&#39;,0)<br/>
-             读入图像<br/>
-        第一个参数是图像的路径，第二个参数是告诉函数如何读取图像，0为原图读入。<br/>
-        参数二：</p>
+<p>Python命令行（建议用ipython）执行以下命令：</p>
 
-<ul>
-<li><p>cv2.IMREAD_COLOR:读入一副彩色图像。图像的透明度会被忽略， 这是默认参数。    - cv2.IMREAD_GRAYSCALE:以灰度模式读入图像</p></li>
-<li><p>cv2.IMREAD_UNCHANGED:读入一幅图像，并且包括图像的 alpha 通道</p></li>
-</ul>
-
-<h3 id="toc_2">显示图片</h3>
-
-<ul>
-<li><p>cv2.imshow(&#39;image&#39;,img)</p>
-
-<p>显示图像，窗口会自动调整为图像大小。<br/>
-第一个参数是显示的窗口的名字，第二个参数是要显示的图片的变量名。你可以创建多个窗口，但是必须给他们不同的名字。</p></li>
-</ul>
-
-<h3 id="toc_3">等待键盘输入</h3>
-
-<ul>
-<li><p>cv2.waitKey()<br/>
-等待键盘输入，参数以毫秒为单位。</p>
-
-<ul>
-<li><p>如果参数为0<br/>
-图片一直显示着，直到按下任意键，图片被关掉，执行下一段代码。</p></li>
-<li><p>如果参数大于0，代表显示图片为多少毫秒，在这段时间后执行下一段代码。</p>
-
-<ul>
-<li><p>如果在显示图片期间，键盘有输入，函数返回键盘输入的ASCII码的数值。</p></li>
-<li><p>如果没有键盘输入，返回值为-1。</p></li>
-</ul>
-
-<p>可以被用来检测特定键是否被按下，例如按键 s 是否被按下。</p></li>
-</ul></li>
-</ul>
-
-<h3 id="toc_4">保存图片</h3>
-
-<p>cv2.imwrite(&#39;xxx.png&#39;,img)</p>
-
-<p>将img的图像保存为xxx.png</p>
-
-<h3 id="toc_5">删除窗口</h3>
-
-<p>cv2.destroyAllWindows()</p>
-
-<p>用于删除所有窗口。删除特定的窗口可以使用cv2.destroyWindow()，在括号内输入你想删除的窗口名。</p>
-
-<h4 id="toc_6">example</h4>
-
-<pre><code>    ```Python
-    k = cv2.waitKey(0)&amp;0xFF
-    #64位系统必须有&amp;0xFF
-    if k==27: 
-    #27在键盘上代表escape
-        cv2.destroyAllWindows()
-    elif k == ord(&#39;s&#39;):
-        cv2.imwrite(&#39;messigray.png&#39;,img)
-        cv2.destroyAllWindows()
-    ```
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
 </code></pre>
 
-<h2 id="toc_7">视频</h2>
+<p>以下表示MNIST数据集加载成功：</p>
 
-<h3 id="toc_8">从摄像头读入视频</h3>
+<pre><code class="language-shell">Extracting MNIST_data/train-images-idx3-ubyte.gz
+Extracting MNIST_data/train-labels-idx1-ubyte.gz
+Extracting MNIST_data/t10k-images-idx3-ubyte.gz
+Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
 
-<p>cap.read() 返回一个布尔值(True/False)。如果帧读取的是正确的， 就是 True。所以最后你可以通过检查他的返回值来查看视频文件是否已经到 了结尾。</p>
-
-<p>有时 cap 可能不能成功的初始化摄像头设备。这种情况下上面的代码会报 错。你可以使用 cap.isOpened()，来检查是否成功初始化了。如果返回值是 True，那就没有问题。否则就要使用函数 cap.open()。</p>
-
-<p>你可以使用函数 cap.get(propId) 来获得视频的一些参数信息。这里 propId 可以是 0 到 18 之间的任何整数。每一个数代表视频的一个属性。</p>
-
-<blockquote>
-<blockquote>
-<p>CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds or video capture timestamp.<br/>
-CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.<br/>
-CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file: 0 - start of the film, 1 - end of the film.<br/>
-CV_CAP_PROP_FRAME_WIDTH 视频每一帧的宽。<br/>
-CV_CAP_PROP_FRAME_HEIGHT 视频每一帧的高。<br/>
-CV_CAP_PROP_FPS 视频的帧速。<br/>
-CV_CAP_PROP_FOURCC 4个字符表示的视频编码器格式。<br/>
-CV_CAP_PROP_FRAME_COUNT 视频的帧数。<br/>
-CV_CAP_PROP_FORMAT Format of the Mat objects returned byretrieve().<br/>
-CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.<br/>
-CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).<br/>
-CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).<br/>
-CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).<br/>
-CV_CAP_PROP_HUE Hue of the image (only for cameras).<br/>
-CV_CAP_PROP_GAIN Gain of the image (only for cameras).<br/>
-CV_CAP_PROP_EXPOSURE Exposure (only for cameras).<br/>
-CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.<br/>
-CV_CAP_PROP_WHITE_BALANCE Currently not supported<br/>
-CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)<br/>
-注意：当你查询的属性是VideoCapture()不支持的属性时，返回值为0.</p>
-</blockquote>
-</blockquote>
-
-<p>其中的一些值可以使用 cap.set(propId,value) 来修改，value 就是 你想要设置成的新值。</p>
-
-<p>例如，我可以使用 cap.get(3) 和 cap.get(4) 来查看每一帧的宽和高。 默认情况下得到的值是 640X480。但是我可以使用 ret=cap.set(3,320) 和 ret=cap.set(4,240) 来把宽和高改成 320X240。</p>
-
-<h4 id="toc_9">example</h4>
-
-<pre><code class="language-python">#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-&quot;&quot;&quot;
-Created on Sun Apr 23 14:13:01 2017
-
-@author: zhang
-&quot;&quot;&quot;
-
-import numpy as np
-import cv2
-
-
-cap = cv2.VideoCapture(0)
-#VideoCapture是摄像头对象，0是内置摄像头
-while(True):
-    ret, frame = cap.read()
-    #cap.read()返回值有两个，一个是布尔值，赋给ret；一个是三维矩阵，为每一帧的图像，赋给frame
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    #cv2.cvtColor是转换颜色空间函数，将每一帧图像转换为灰度图像
-    cv2.imshow(&#39;frame&#39;,gray)
-    #显示的是灰度视频，第一个参数是窗口名称
-    if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
-    #每一帧持续1毫秒
-        break
-cap.release()
-#释放摄像头
-cv2.destroyAllWindows()
-#destroyAllWindows()在mac上回出现无法及时关闭，进入卡顿加载的状态，以下4条代码是解决方法
-cv2.waitKey(1)
-cv2.waitKey(1)
-cv2.waitKey(1)
-cv2.waitKey(1)
-#Mac上产生的Python窗口在dock上是无法关闭的，必须直接退出Python
-#因为上述是以简单程序的形式，而不是以主函数执行，无法及时退出程序，所以通过exit（）直接退出Python
-exit()
-#也可以以主函数形式运行，但上述主要代码必须在一个函数体内。例如：
-&quot;&quot;&quot;def video_capture():
-    ...
-if __name__ == &#39;__main__&#39;:
-    video_capture()
-    &quot;&quot;&quot;
 </code></pre>
 
-<h3 id="toc_10">从文件中播放视频</h3>
+<h3 id="toc_2">启动TensorFlow InteractiveSession</h3>
 
-<p>与从摄像头中捕获一样，你只需要把设备索引号改成视频文件的名字。在播放每一帧时，使用 cv2.waiKey() 设置适当的持续时间。通常每一帧图像的持续时间是25毫秒。<br/>
-<mark>注意：要执行cv2.VideoWriter_fourcc，必须安装合适版本的 ffmpeg 或者 gstreamer。</mark></p>
+<p>TensorFlow程序的常见用法是首先创建一个图形，然后在会话中启动它。如下：</p>
 
-<h4 id="toc_11">example</h4>
+<pre><code class="language-Python">import tensorflow as tf
+matrix1 = tf.constant([[3., 3]])
+matrix2 = tf.constant([[2.], [2.]])
+product = tf.matmul(matrix1, matrix2)
+sess= tf.Session()
+result = sess.run(product)
+print result
+sess.close()
+</code></pre>
 
-<pre><code class="language-Python">
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-&quot;&quot;&quot;
-Created on Thu May 11 22:19:23 2017
+<p>而在较为复杂的模型当中，可以采用InteractiveSession类。因为它允许在运行图的时候插入计算图。这使得编程更加灵活。如下：</p>
 
-@author: zhang
-&quot;&quot;&quot;
+<pre><code class="language-Python">import tensorflow as tf
+sess = tf.InteractiveSession()
+</code></pre>
 
-import numpy as np
-import cv2
+<p><mark>注意：Mac可能会遇到如下提示，但不影响使用，请直接忽略</mark></p>
 
-cap = cv2.VideoCapture(0)
+<pre><code>2017-07-13 14:34:56.142538: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142569: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142579: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142589: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+</code></pre>
 
-fourcc = cv2.VideoWriter_fourcc(*&#39;XVID&#39;)
-out = cv2.VideoWriter(&#39;output.avi&#39;, fourcc, 20.0, (640, 480))
+<h3 id="toc_3">建立一个Softmax回归模型</h3>
 
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    if ret == True:
-        frame = cv2.flip(frame, 0)
-        out.write(frame)
-        cv2.imshow(&#39;frame&#39;, frame)
-        if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
-            break
-        else:
-            break
+<ol>
+<li>占位符</li>
+</ol>
 
-cap.release()
-out.release()
-cv2.destroyAllWindows()
+<p>我们需要一个输入图像（矩阵类型）和目标输出类（一般是数字，以向量或矩阵形式展现）创建节点来开始构建计算图</p>
 
+<pre><code class="language-Python">x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+</code></pre>
+
+<ul>
+<li>tf.placeholder代表占位符，在数学角度可以理解为未知量</li>
+<li>shape代表矩阵的形状，第一个参数为None代表第一个维度未知，在这个模型中代表图片的数量；第二个参数是图片28*28像素构成的单一MNIST图片平铺而成的维度</li>
+<li>y_在这个模型中代表图片对应的数字，即正确结果。它也是一个二维矩阵，行数代表图片数量，每一行有十个数，代表对应数字。</li>
+</ul>
+
+<p>2.变量</p>
+
+<p>我们现在定义模型的权重W和偏置b。W和b的类型是Variable，即变量。因为我们需要的是不断地调整这两个变量，使得输出量和目标量相同。（简单地说，就是不断调整参数，使得计算机判断图片代表的数字是正确的）。</p>
+
+<pre><code class="language-Python">W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
+</code></pre>
+
+<ul>
+<li>W是784*10的矩阵，矩阵元素全部为零</li>
+<li>b是10*1的矩阵，矩阵元素全部为零</li>
+</ul>
+
+<p>3.变量的初始化</p>
+
+<pre><code class="language-Python">sess.run(tf.global_variables_initializer())
+</code></pre>
+
+<p>4.预测类和损失函数</p>
+
+<pre><code class="language-python">y = tf.matmul(x,W) + b
+
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+</code></pre>
+
+<p>5.训练模型</p>
+
+<pre><code class="language-python">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+</code></pre>
+
+<p>6.评估模型</p>
+
+<pre><code class="language-python">correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+#结果：0.9208
+</code></pre>
+
+<pre><code>In [6]: correct_prediction
+Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
+</code></pre>
+
+<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
+
+<pre><code>In [8]: accuracy
+Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
+</code></pre>
+
+<pre><code>In [10]: accuracy.eval?
+Signature: accuracy.eval(feed_dict=None, session=None)
+Docstring:
+
+Evaluates this tensor in a `Session`.
+
+Calling this method will execute all preceding operations that
+produce the inputs needed for the operation that produces this
+tensor.
+
+*N.B.* Before invoking `Tensor.eval()`, its graph must have been
+launched in a session, and either a default session must be
+available, or `session` must be specified explicitly.
+
+Args:
+  feed_dict: A dictionary that maps `Tensor` objects to feed values.
+    See @{tf.Session.run} for a
+    description of the valid feed values.
+  session: (Optional.) The `Session` to be used to evaluate this tensor. If
+    none, the default session will be used.
+
+Returns:
+  A numpy array corresponding to the value of this tensor.
+File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
+Type:      instancemethod
+
+
+</code></pre>
+
+<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
+
+<p>8.代码总结</p>
+
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
+import tensorflow as tf
+
+sess = tf.InteractiveSession()
+
+x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
+sess.run(tf.global_variables_initializer())
+y = tf.matmul(x,W) + b
+
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 </code></pre>
 
 
@@ -362,7 +302,7 @@ cv2.destroyAllWindows()
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(5)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(6)</strong></a>
 	        
 	        
 	        
@@ -380,6 +320,12 @@ cv2.destroyAllWindows()
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">神经网络入门</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -406,10 +352,6 @@ cv2.destroyAllWindows()
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581073792.html">Matplotlib by Example</a>
-		      </li>
-	     
 	  
 	      
 	  

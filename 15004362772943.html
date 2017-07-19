@@ -9,7 +9,7 @@
   
   <title>
     
-  尖端追踪指南
+  神经网络入门 - 尖端追踪指南
   
 
   </title>
@@ -80,80 +80,74 @@ $(document).ready(function(event) {
 </nav>
   <div id="main">
     <div id="content"> 
-<div class="blog-index">
+<div>
+	<article class="hentry" role="article">
+	<header>
+			  	<h1 class="entry-title">神经网络入门</h1>
+				<p class="meta"><time datetime="2017-07-19T11:51:17+08:00" pubdate data-updated="true">2017/7/19</time></p>
+			 </header>
+		  	<div class="entry-content">
+			  	<h2 id="toc_0">1.梯度下降（Gradient Descent）和反向传播（Back propagation）</h2>
 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="15002529995550.html">TensorFlow算法实现流程</a></h1>
-			<p class="meta"><time datetime="2017-07-17T08:56:39+08:00" 
-			pubdate data-updated="true">2017/7/17</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<p>来自TensorFlow Machine Learning Cookbook和自己的一些想法总结。</p>
+<h3 id="toc_1">概念</h3>
 
-<h2 id="toc_0">1.载入或产生数据集</h2>
+<ul>
+<li><p>梯度：函数在某一点的梯度是一个自变量空间内的向量。自变量顺着梯度方向变化时函数值上升得最快。梯度的模（长度）是函数值上升的速率。梯度朝某方向投影的长度是自变量顺着该方向变化时函数值的变化率.</p></li>
+<li><p>梯度下降算法：在现实世界中，梯度可以更为直观的理解为坡度。想象在一座山坡上，你想最快地下山。山坡越陡峭，迈相同的步子下山就越快。当然，在机器学习的相关模型中，我们无法选择梯度（山坡的坡度），起始点是可以选择的（在哪个位置下山），学习效率（learning rate，就是下山的步子大小）也是可以选择的。<br/>
+根据上面的例子，我们可以理解为我们在山坡的某一点要到山下某一个平地上（坡度为零）。</p>
 
-<h2 id="toc_1">2.转换和标准化数据</h2>
+<h3 id="toc_2">为什么要梯度下降</h3>
 
-<p>将数据转换成符合TensorFlow要求的形式。通常算法会要求数据是标准化形式，我们采用TensorFlow的函数实现标准化：<br/>
-<code>data = tf.nn.batch_norm_with_global_normalization(...)</code></p>
+<p>梯度下降算法是为了解决最小化损失函数而提出的。损失函数可以参考<a href="14941558480316.html">Loss Function 损失函数</a>。简单地说，我们希望模型预测值和真实值的误差越小越好，所以我们用损失函数来衡量这些误差。<br/>
+损失函数既然是一个函数，我们在坐标系中可以将它描绘出来（只要它没有超过三维，超过好像也是有办法描绘的，不够不太好理解）。我们举最简单例子（纵坐标表示损失函数的大小，横坐标表示可以调整的参数）：<br/>
+<img src="media/15004362772943/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-19%20%E4%B8%8B%E5%8D%883.15.jpg" alt="屏幕快照 2017-07-19 下午3.15"/></p></li>
+</ul>
 
-<p>标准化是统计学概念，用于不同类型数据根据某一标准调整，以方便比较。可以参考维基百科的定义：</p>
+<p>如果我们在这个函数的山坡上，想到达海拔最低的地方。显然，我们会到达横坐标为3附近的点。因为这个地方是坡底，坡度为0，也就是梯度为零。<br/>
+推广到三维坐标系下，我们可以看看：<br/>
+<img src="media/15004362772943/1042406-20161017221342935-1872962415.png" alt="1042406-20161017221342935-1872962415"/><br/>
+在不同的出发点出发，我们根据坡度最陡峭的方向（梯度）往山下走，如图所示，我们可能会走到不同的坡底。这是因为我们往往无法知道全局的形状，指引我们下山的是坡度（梯度）。因此，我们可能会遇到局部最小值，也就是说，我们跑到了坡底，我们无法知道有没有另一个坡底，比这个坡底海拔还要低。这也是梯度下降算法的一个弊端：无法确定是否是全局最小，而不是局部最小。</p>
 
-<blockquote>
-<p>在统计学以及一些统计学应用领域，标准化有着一系列涵义。[1]举个最简单的例子，率的标准化指的是参照某个标准来调整两组资料的构成使其能够形成参考，比如两者有着不同的尺寸和规格，如果要比较两个总率时，往往按照某个统一的标准（如统一的内部构成）来进行修正，以消除内部构成不同所造成的对结果的影响。[2]</p>
-</blockquote>
+<h2 id="toc_3">2.卷积与池化</h2>
 
-<h2 id="toc_2">3.将数据集分割成训练、测试和确认集合</h2>
+<p>卷积层：<br/>
+池化层：对输入的特征图进行压缩，一方面使特征图变小，简化网络计算复杂度；一方面进行特征压缩，提取主要特征</p>
 
-<p>训练数据用于训练模型，调整参数；测试数据用于测试模型的准确性；确认数据用于保证到达了最佳参数</p>
+			</div>
 
-<h2 id="toc_3">4.设定算法参数</h2>
+		
+	  
+		<footer>
+		 <p class="meta">
 
-<p>在算法中，我们必须人工设定一些参数保证模型正常初始化。例如：学习效率、训练样本大小、迭代次数</p>
+			<strong>Categories:</strong>&nbsp; 
+			<span class="categories">
+			
+			    <a class='category' href='%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html'>深度学习&机器学习</a>&nbsp;
+			 
+			</span>
+		    </p>
+		    <p class="meta">
+		      
+		 </p>
+	    
+		<div class="sharing">
+		  
+          
 
-<h2 id="toc_4">5.初始化变量和占位符</h2>
-
-<p>主要输入变量或占位符的数据类型、大小</p>
-
-<h2 id="toc_5">6.定义模型结构</h2>
-
-<p>选择算法模型。可以理解为选择哪个公式，然后用程序语言表达。TensorFlow内置了许多已有的算法框架，根据自身需求构建算法模型。在深度学习中，需要多层的节点连接最后输出，这也是深度学习名字的由来。</p>
-
-<h2 id="toc_6">7.申明损失函数</h2>
-
-<p>损失函数可以告诉我们模型的预测值和真实值的差距。</p>
-
-<h2 id="toc_7">8.初始化并训练模型</h2>
-
-<p>输入数据，计算机根据算法不断调整参数，求得最优解。在TensorFlow中是张量在节点间不断流动。</p>
-
-<h2 id="toc_8">9.评估模型</h2>
-
-<p>用新的数据评估模型。</p>
-
-<h2 id="toc_9">10.调试超参数</h2>
-
-<p>调整初始的超参数（学习效率、训练样本大小），重复上述步骤。</p>
-
-<h2 id="toc_10">11.部署和预测新的数据结果</h2>
-
-<p>对新的数据进行预测。估计是总结经验。</p>
-
+          
 
 		</div>
 
-		
-
-	</article>
-  
-	<div class="pagination">
-	 <a class="prev" href="all_2.html">&larr; Older</a> 
-<a href="archives.html">Blog Archives</a>
-	 <a class="next" href="all.html">Newer &rarr;</a>  
+	    <p class="meta">
 	    
-	</div>
+	    
+	        <a class="basic-alignment right" href="15002529995550.html" 
+	        title="Next Post: TensorFlow算法实现流程">TensorFlow算法实现流程 &raquo;</a>
+	    
+	    </p>
+	  </footer>
+	</article>
 </div>
  <aside class="sidebar"> 
 

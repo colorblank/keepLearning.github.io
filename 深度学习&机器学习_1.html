@@ -84,195 +84,62 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997729082239.html">TensorFlow框架入门</a></h1>
-			<p class="meta"><time datetime="2017-07-11T19:35:08+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
+		  	<h1 class="entry-title"><a href="15002529995550.html">TensorFlow算法实现流程</a></h1>
+			<p class="meta"><time datetime="2017-07-17T08:56:39+08:00" 
+			pubdate data-updated="true">2017/7/17</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">1.采用MNIST数据集实现单层线性分类模型</h2>
+		  	<p>来自TensorFlow Machine Learning Cookbook和自己的一些想法总结。</p>
 
-<p>环境：Python 2.7.13 + TensorFlow 1.2.1<br/>
-系统：macos</p>
+<h2 id="toc_0">1.载入或产生数据集</h2>
 
-<p>MNIST是手写数字的图像数据集，常用于机器学习的训练。</p>
+<h2 id="toc_1">2.转换和标准化数据</h2>
 
-<h3 id="toc_1">加载MNIST数据集</h3>
+<p>将数据转换成符合TensorFlow要求的形式。通常算法会要求数据是标准化形式，我们采用TensorFlow的函数实现标准化：<br/>
+<code>data = tf.nn.batch_norm_with_global_normalization(...)</code></p>
 
-<p>Python命令行（建议用ipython）执行以下命令：</p>
+<p>标准化是统计学概念，用于不同类型数据根据某一标准调整，以方便比较。可以参考维基百科的定义：</p>
 
-<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
-</code></pre>
+<blockquote>
+<p>在统计学以及一些统计学应用领域，标准化有着一系列涵义。[1]举个最简单的例子，率的标准化指的是参照某个标准来调整两组资料的构成使其能够形成参考，比如两者有着不同的尺寸和规格，如果要比较两个总率时，往往按照某个统一的标准（如统一的内部构成）来进行修正，以消除内部构成不同所造成的对结果的影响。[2]</p>
+</blockquote>
 
-<p>以下表示MNIST数据集加载成功：</p>
+<h2 id="toc_2">3.将数据集分割成训练、测试和确认集合</h2>
 
-<pre><code class="language-shell">Extracting MNIST_data/train-images-idx3-ubyte.gz
-Extracting MNIST_data/train-labels-idx1-ubyte.gz
-Extracting MNIST_data/t10k-images-idx3-ubyte.gz
-Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
+<p>训练数据用于训练模型，调整参数；测试数据用于测试模型的准确性；确认数据用于保证到达了最佳参数</p>
 
-</code></pre>
+<h2 id="toc_3">4.设定算法参数</h2>
 
-<h3 id="toc_2">启动TensorFlow InteractiveSession</h3>
+<p>在算法中，我们必须人工设定一些参数保证模型正常初始化。例如：学习效率、训练样本大小、迭代次数</p>
 
-<p>TensorFlow程序的常见用法是首先创建一个图形，然后在会话中启动它。如下：</p>
+<h2 id="toc_4">5.初始化变量和占位符</h2>
 
-<pre><code class="language-Python">import tensorflow as tf
-matrix1 = tf.constant([[3., 3]])
-matrix2 = tf.constant([[2.], [2.]])
-product = tf.matmul(matrix1, matrix2)
-sess= tf.Session()
-result = sess.run(product)
-print result
-sess.close()
-</code></pre>
+<p>主要输入变量或占位符的数据类型、大小</p>
 
-<p>而在较为复杂的模型当中，可以采用InteractiveSession类。因为它允许在运行图的时候插入计算图。这使得编程更加灵活。如下：</p>
+<h2 id="toc_5">6.定义模型结构</h2>
 
-<pre><code class="language-Python">import tensorflow as tf
-sess = tf.InteractiveSession()
-</code></pre>
+<p>选择算法模型。可以理解为选择哪个公式，然后用程序语言表达。TensorFlow内置了许多已有的算法框架，根据自身需求构建算法模型。在深度学习中，需要多层的节点连接最后输出，这也是深度学习名字的由来。</p>
 
-<p><mark>注意：Mac可能会遇到如下提示，但不影响使用，请直接忽略</mark></p>
+<h2 id="toc_6">7.申明损失函数</h2>
 
-<pre><code>2017-07-13 14:34:56.142538: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142569: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142579: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142589: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
-</code></pre>
+<p>损失函数可以告诉我们模型的预测值和真实值的差距。</p>
 
-<h3 id="toc_3">建立一个Softmax回归模型</h3>
+<h2 id="toc_7">8.初始化并训练模型</h2>
 
-<ol>
-<li>占位符</li>
-</ol>
+<p>输入数据，计算机根据算法不断调整参数，求得最优解。在TensorFlow中是张量在节点间不断流动。</p>
 
-<p>我们需要一个输入图像（矩阵类型）和目标输出类（一般是数字，以向量或矩阵形式展现）创建节点来开始构建计算图</p>
+<h2 id="toc_8">9.评估模型</h2>
 
-<pre><code class="language-Python">x = tf.placeholder(tf.float32, shape=[None, 784])
-y_ = tf.placeholder(tf.float32, shape=[None, 10])
-</code></pre>
+<p>用新的数据评估模型。</p>
 
-<ul>
-<li>tf.placeholder代表占位符，在数学角度可以理解为未知量</li>
-<li>shape代表矩阵的形状，第一个参数为None代表第一个维度未知，在这个模型中代表图片的数量；第二个参数是图片28*28像素构成的单一MNIST图片平铺而成的维度</li>
-<li>y_在这个模型中代表图片对应的数字，即正确结果。它也是一个二维矩阵，行数代表图片数量，每一行有十个数，代表对应数字。</li>
-</ul>
+<h2 id="toc_9">10.调试超参数</h2>
 
-<p>2.变量</p>
+<p>调整初始的超参数（学习效率、训练样本大小），重复上述步骤。</p>
 
-<p>我们现在定义模型的权重W和偏置b。W和b的类型是Variable，即变量。因为我们需要的是不断地调整这两个变量，使得输出量和目标量相同。（简单地说，就是不断调整参数，使得计算机判断图片代表的数字是正确的）。</p>
+<h2 id="toc_10">11.部署和预测新的数据结果</h2>
 
-<pre><code class="language-Python">W = tf.Variable(tf.zeros([784,10]))
-b = tf.Variable(tf.zeros([10]))
-</code></pre>
-
-<ul>
-<li>W是784*10的矩阵，矩阵元素全部为零</li>
-<li>b是10*1的矩阵，矩阵元素全部为零</li>
-</ul>
-
-<p>3.变量的初始化</p>
-
-<pre><code class="language-Python">sess.run(tf.global_variables_initializer())
-</code></pre>
-
-<p>4.预测类和损失函数</p>
-
-<pre><code class="language-python">y = tf.matmul(x,W) + b
-
-cross_entropy = tf.reduce_mean(
-    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
-</code></pre>
-
-<p>5.训练模型</p>
-
-<pre><code class="language-python">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
-
-for _ in range(1000):
-  batch = mnist.train.next_batch(100)
-  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
-</code></pre>
-
-<p>6.评估模型</p>
-
-<pre><code class="language-python">correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
-#结果：0.9208
-</code></pre>
-
-<pre><code>In [6]: correct_prediction
-Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
-</code></pre>
-
-<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
-
-<pre><code>In [8]: accuracy
-Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
-</code></pre>
-
-<pre><code>In [10]: accuracy.eval?
-Signature: accuracy.eval(feed_dict=None, session=None)
-Docstring:
-
-Evaluates this tensor in a `Session`.
-
-Calling this method will execute all preceding operations that
-produce the inputs needed for the operation that produces this
-tensor.
-
-*N.B.* Before invoking `Tensor.eval()`, its graph must have been
-launched in a session, and either a default session must be
-available, or `session` must be specified explicitly.
-
-Args:
-  feed_dict: A dictionary that maps `Tensor` objects to feed values.
-    See @{tf.Session.run} for a
-    description of the valid feed values.
-  session: (Optional.) The `Session` to be used to evaluate this tensor. If
-    none, the default session will be used.
-
-Returns:
-  A numpy array corresponding to the value of this tensor.
-File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
-Type:      instancemethod
-
-
-</code></pre>
-
-<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
-
-<p>8.代码总结</p>
-
-<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
-import tensorflow as tf
-
-sess = tf.InteractiveSession()
-
-x = tf.placeholder(tf.float32, shape=[None, 784])
-y_ = tf.placeholder(tf.float32, shape=[None, 10])
-W = tf.Variable(tf.zeros([784,10]))
-b = tf.Variable(tf.zeros([10]))
-sess.run(tf.global_variables_initializer())
-y = tf.matmul(x,W) + b
-
-cross_entropy = tf.reduce_mean(
-    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
-train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
-
-for _ in range(1000):
-  batch = mnist.train.next_batch(100)
-  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
-
-correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
-</code></pre>
+<p>对新的数据进行预测。估计是总结经验。</p>
 
 
 		</div>
@@ -302,7 +169,7 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	      </li>
 	  
 	      <li class="post">
-	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(5)</strong></a>
+	        <a href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html"><strong>深度学习&机器学习&nbsp;(6)</strong></a>
 	        
 	        
 	        
@@ -320,6 +187,12 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	<section>
 	  <h1>Recent Posts</h1>
 	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">神经网络入门</a>
+		      </li>
+	     
 	  
 	      
 		      <li class="post">
@@ -346,10 +219,6 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581073792.html">Matplotlib by Example</a>
-		      </li>
-	     
 	  
 	      
 	  
