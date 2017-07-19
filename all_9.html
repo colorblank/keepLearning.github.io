@@ -90,13 +90,42 @@ $(document).ready(function(event) {
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
-
-<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。<mark>损失函数的值越小，越接近真实值。</mark></p>
+		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx + b。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 和 b 的值。<br/>
+损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。<mark>损失函数的值越小，越接近真实值。</mark></p>
 
 <p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
 
-<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失 （SVM Loss）</h2>
+<h2 id="toc_0">从数学的角度分析</h2>
+
+<p>我们用最简单的方程式来表示预测的函数：</p>
+
+<pre><code>f(W, x) = Wx + b
+y_ :真实值
+
+# W 代表权重，是可调整的参数；b 是偏置量，同样是可调整的参数。
+
+#上述两个参数是神经网络需要不断调整得到的目标参数。 
+</code></pre>
+
+<p>在训练时，每个训练样本都会有一个对应的结果的真实值，我们用 y_表示。</p>
+
+<p><img src="media/14941558480316/1.jpg" alt="1"/></p>
+
+<p>上图表示的是  f(x) = 0.7x+0.5，我们以这个函数作为模型。</p>
+
+<p>假设我们在训练时输入（x，y_)为(2.5,5)。那么由于x = 2.5, f(2.5) = 2.25</p>
+
+<p>因此，我们可以看到，在真实值y_= 5和模型预测值f(2.5) = 2.25之间存在很大差距。如果我们以欧式距离代表损失大小（也有其他方法，见下文），图中花括号代表的距离就是这个模型的损失函数。数学的表示即：</p>
+
+<pre><code>L(f(x), y_) =  f(x) - y_
+</code></pre>
+
+<p>假设我们训练样本有多个，我们每个样本产生的损失值都有可能不同，那么情况会变成这样：<br/>
+<img src="media/14941558480316/1.jpg" alt="1"/></p>
+
+<p>根据这些损失，我们会不断调整参数的值，不断逼近最相似的函数，得到最优的模型。</p>
+
+<h2 id="toc_1">Multiclass Support Vector Machine loss多重支持向量机损失 （SVM Loss）</h2>
 
 <blockquote>
 <p>As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
@@ -130,7 +159,7 @@ $(document).ready(function(event) {
 
 <p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
 
-<h2 id="toc_1">Softmax 函数</h2>
+<h2 id="toc_2">Softmax 函数</h2>
 
 <p>公式如下：<br/>
 <img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%887.54.47.png" alt="屏幕快照 2017-07-11 下午7.54.47"/></p>
