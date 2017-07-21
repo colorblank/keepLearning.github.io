@@ -9,7 +9,7 @@
   
   <title>
     
-  尖端追踪指南
+  Python字符串操作笔记（一） - 尖端追踪指南
   
 
   </title>
@@ -80,108 +80,91 @@ $(document).ready(function(event) {
 </nav>
   <div id="main">
     <div id="content"> 
-<div class="blog-index">
+<div>
+	<article class="hentry" role="article">
+	<header>
+			  	<h1 class="entry-title">Python字符串操作笔记（一）</h1>
+				<p class="meta"><time datetime="2017-07-21T21:46:27+08:00" pubdate data-updated="true">2017/7/21</time></p>
+			 </header>
+		  	<div class="entry-content">
+			  	<h2 id="toc_0">1.根据某一字符分割字符串</h2>
 
-	<article>
-		 <header>
-		  	<h1 class="entry-title"><a href="15005564120900.html">Numpy 入门笔记（一）</a></h1>
-			<p class="meta"><time datetime="2017-07-20T21:13:32+08:00" 
-			pubdate data-updated="true">2017/7/20</time></p>
-		 </header>
-	  	<div class="entry-content">
-		  	
-		  	<h2 id="toc_0">1.一维数组的转换</h2>
+<h3 id="toc_1">方法一：使用split()</h3>
 
-<p>方法：np.transpose([target])</p>
-
-<pre><code class="language-In">Out[5]: array([1, 2, 3, 4])
-
-In [6]: b = np.transpose([a])
-
-In [7]: b
-Out[7]: 
-array([[1],
-       [2],
-       [3],
-       [4]])
-</code></pre>
-
-<h2 id="toc_1">2.返回数组的行或列的大小</h2>
-
-<p>方法：</p>
+<p>语法：<br/>
+<code>str.split(str=&quot;&quot;, num=string.count(str)).</code></p>
 
 <ul>
-<li>target.shape[0] -&gt;返回行的大小</li>
-<li>target.shape[1] -&gt;返回列的大小</li>
-<li>target.shape -&gt;返回行和列的大小</li>
+<li>str -- 分隔符，默认为所有的空字符，包括空格、换行(\n)、制表符(\t)等，也可以指定字符。</li>
+<li>num -- 分割次数</li>
 </ul>
 
-<pre><code>In [9]: b.shape
-Out[9]: (4, 1)
+<hr/>
 
-In [10]: b.shape[0]
-Out[10]: 4
+<p>常见操作：</p>
 
-In [11]: b.shape[1]
-Out[11]: 1
+<ul>
+<li><p>分割文件名</p>
 
+<p>使用split()来分割字符串返回值是list列表类型，将字符串一分为二，或者多分也是可以的。</p></li>
+</ul>
 
-</code></pre>
+<pre><code>In [51]: str = &quot;user001.jpg&quot;
 
-<h2 id="toc_2">3.返回第x行的所有值；返回第x列的所有值</h2>
+In [52]: str.split(&#39;.&#39;)
+Out[52]: [&#39;user001&#39;, &#39;jpg&#39;]
 
-<p>方法：<br/>
-- target[x,:] -&gt;返回第x行的所有元素值，返回值是数组类型<br/>
-- target[:,x] -&gt;返回第x列的所有元素值，返回值是数组类型</p>
+In [53]: a = str.split(&#39;.&#39;)
 
-<pre><code>In [46]: target
-Out[46]: 
-array([[&#39;0&#39;, &#39;A&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;0&#39;, &#39;A&#39;],
-       [&#39;0&#39;, &#39;A&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;0&#39;, &#39;A&#39;]],
-      dtype=&#39;|S21&#39;)
+In [54]: a
+Out[54]: [&#39;user001&#39;, &#39;jpg&#39;]
 
-In [47]: target[2,:]
-Out[47]: 
-array([&#39;1&#39;, &#39;B&#39;],
-      dtype=&#39;|S21&#39;)
+In [55]: a[0]
+Out[55]: &#39;user001&#39;
 
-In [48]: target[5,:]
-Out[48]: 
-array([&#39;1&#39;, &#39;B&#39;],
-      dtype=&#39;|S21&#39;)
+In [56]: a[1]
+Out[56]: &#39;jpg&#39;
 
-In [49]: target[:,0]
-Out[49]: 
-array([&#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;, &#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;],
-      dtype=&#39;|S21&#39;)
-
-In [50]: target[:,1]
-Out[50]: 
-array([&#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;, &#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;],
-      dtype=&#39;|S21&#39;)
-
+In [57]: type(a)
+Out[57]: list
 
 </code></pre>
 
+			</div>
+
+		
+	  
+		<footer>
+		 <p class="meta">
+
+			<strong>Categories:</strong>&nbsp; 
+			<span class="categories">
+			
+			    <a class='category' href='Python%E8%BF%9B%E9%98%B6.html'>Python进阶</a>&nbsp;
+			 
+			</span>
+		    </p>
+		    <p class="meta">
+		      
+		 </p>
+	    
+		<div class="sharing">
+		  
+          
+
+          
 
 		</div>
 
-		
-
-	</article>
-  
-	<div class="pagination">
-	 <a class="prev" href="all_2.html">&larr; Older</a> 
-<a href="archives.html">Blog Archives</a>
-	 <a class="next" href="all.html">Newer &rarr;</a>  
+	    <p class="meta">
 	    
-	</div>
+	    
+	        <a class="basic-alignment right" href="15005564120900.html" 
+	        title="Next Post: Numpy 入门笔记（一）">Numpy 入门笔记（一） &raquo;</a>
+	    
+	    </p>
+	  </footer>
+	</article>
 </div>
  <aside class="sidebar"> 
 

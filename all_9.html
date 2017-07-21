@@ -84,64 +84,27 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14941558480316.html">Loss Function 损失函数</a></h1>
-			<p class="meta"><time datetime="2017-05-07T19:17:28+08:00" 
-			pubdate data-updated="true">2017/5/7</time></p>
+		  	<h1 class="entry-title"><a href="14997578015392.html">Loss Function 损失函数</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:23:21+08:00" 
+			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx + b。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 和 b 的值。<br/>
-损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。<mark>损失函数的值越小，越接近真实值。</mark></p>
+		  	<p>在机器学习中最基本的关系是输入和输出（一般是标签），数学上可以看做 f(W,x) = Wx 。W 是我们可以设置的权重。可以看出，为了得到最优的输出，我们必须不断调整 W 的值。</p>
+
+<p>损失函数是用来估量你模型的预测值f(x)与真实值Y的不一致程度，它是一个非负实值函数,通常使用L(Y, f(x))来表示。</p>
+
+<p>损失函数的值越小，越接近真实值。</p>
 
 <p>因此，我们通过降低损失函数的值来提高识别的准确性。</p>
 
-<h2 id="toc_0">从数学的角度分析</h2>
-
-<p>我们用最简单的方程式来表示预测的函数：</p>
-
-<pre><code>f(W, x) = Wx + b
-y_ :真实值
-
-# W 代表权重，是可调整的参数；b 是偏置量，同样是可调整的参数。
-
-#上述两个参数是神经网络需要不断调整得到的目标参数。 
-</code></pre>
-
-<p>在训练时，每个训练样本都会有一个对应的结果的真实值，我们用 y_表示。</p>
-
-<p><img src="media/14941558480316/1.jpg" alt="1"/></p>
-
-<p>上图表示的是  f(x) = 0.7x+0.5，我们以这个函数作为模型。</p>
-
-<p>假设我们在训练时输入（x，y_)为(2.5,5)。那么由于x = 2.5, f(2.5) = 2.25</p>
-
-<p>因此，我们可以看到，在真实值y_= 5和模型预测值f(2.5) = 2.25之间存在很大差距。如果我们以欧式距离代表损失大小（也有其他方法，见下文），图中花括号代表的距离就是这个模型的损失函数。数学的表示即：</p>
-
-<pre><code>L(f(x), y_) =  f(x) - y_
-</code></pre>
-
-<p>假设我们训练样本有多个，我们每个样本产生的损失值都有可能不同，那么情况会变成这样：<br/>
-<img src="media/14941558480316/1.jpg" alt="1"/></p>
-
-<p>根据这些损失，我们会不断调整参数的值，不断逼近最相似的函数，得到最优的模型。</p>
-
-<h2 id="toc_1">Multiclass Support Vector Machine loss多重支持向量机损失 （SVM Loss）</h2>
+<h2 id="toc_0">Multiclass Support Vector Machine loss多重支持向量机损失</h2>
 
 <blockquote>
-<p>As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
+<p>There are several ways to define the details of the loss function. As a first example we will first develop a commonly used loss called the Multiclass Support Vector Machine (SVM) loss. The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin ΔΔ. Notice that it’s sometimes helpful to anthropomorphise the loss functions as we did above: The SVM “wants” a certain outcome in the sense that the outcome would yield a lower loss (which is good).</p>
 </blockquote>
 
-<p>以上是来自斯坦福cs231n课程里的notes。这里的SVM主要用于计算损失大小。</p>
-
-<p>百度百科对支持向量机SVM的定义如下</p>
-
-<blockquote>
-<p>SVM的主要思想可以概括为两点：<br/>
-1.它是针对线性可分情况进行分析，对于线性不可分的情况，通过使用非线性映射算法将低维输入空间线性不可分的样本转化为高维特征空间使其线性可分，从而使得高维特征空间采用线性算法对样本的非线性特征进行线性分析成为可能。<br/>
-2.它基于结构风险最小化理论之上再特征空间中构建最优超平面，使得学习器得到全局最优化，并且在整个样本空间的期望以某个概率满足一定上界。</p>
-</blockquote>
-
-<p>在图像分类中，图像分类的结果是一个列向量，如下图：</p>
+<p>以上是来自斯坦福cs231n课程里的notes。在图像分类中，图像分类的结果是一个列向量，如下图：</p>
 
 <p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8810.49.19.png" alt="屏幕快照 2017-05-08 下午10.49.19"/></p>
 
@@ -151,57 +114,16 @@ y_ :真实值
      =2.9
 </code></pre>
 
-<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。</p>
-
-<p>这些分类结果通过SVM损失函数后，会得到一个损失的值，而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
+<p>依我浅显之见，多重支持向量损失函数实际上是将分类结果中正确的分类值与不正确的分类值进行比较。正常来说，我们希望函数的结果是将分类结果中分类正确的值（例如将猫的图片进行分类，结果标签是猫的）高，说明分类正确；而错误的分类中，值就低。而SVM通过数学方式量化了分类结果和真实结果的差异程度。</p>
 
 <p>它的公式如下：</p>
 
 <p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-05-08%20%E4%B8%8B%E5%8D%8811.13.39.png" alt="屏幕快照 2017-05-08 下午11.13.39"/></p>
 
-<h2 id="toc_2">Softmax 函数</h2>
+<h2 id="toc_1">Softmax 函数</h2>
 
-<p>公式如下：<br/>
-<img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%887.54.47.png" alt="屏幕快照 2017-07-11 下午7.54.47"/></p>
-
-<p>以下图为例，讲解一下Softmax是如何实现的</p>
-
-<p><img src="media/14941558480316/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-11%20%E4%B8%8B%E5%8D%888.36.19.png" alt="屏幕快照 2017-07-11 下午8.36.19"/></p>
-
-<p>我们用Python来验证一下：</p>
-
-<pre><code>In [1]: import numpy as np
-
-In [12]: cat = np.exp(3.2)
-
-In [13]: car = np.exp(5.1)
-
-In [14]: frog = np.exp(-1.7)
-
-In [15]: sum1 = cat + car + frog 
-#求和，并求概率，即所占比例
-In [16]: sum1
-Out[16]: 188.73712102106381
-In [17]: cat2 = cat/sum1
-
-In [18]: cat2
-Out[18]: 0.12998253901717313
-
-In [19]: car2 = car/sum1
-
-In [20]: car2
-Out[20]: 0.86904953520826567
-
-In [21]: frog2  = frog/sum1
-
-In [22]: frog2
-Out[22]: 0.0009679257745610439
-
-In [24]: -np.log(cat2)
-Out[24]: 2.0402208285265546
-</code></pre>
-
-<p><mark>需要注意的是log是以e为底数的，上面图片的来源CS231n的公开课用的PPT的结果是错误的</mark></p>
+<blockquote>
+</blockquote>
 
 
 		</div>
@@ -224,7 +146,7 @@ Out[24]: 2.0402208285265546
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -252,7 +174,19 @@ Out[24]: 2.0402208285265546
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -269,16 +203,8 @@ Out[24]: 2.0402208285265546
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  

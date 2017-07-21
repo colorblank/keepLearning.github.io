@@ -9,7 +9,7 @@
   
   <title>
     
-  尖端追踪指南
+  Python进阶 - 尖端追踪指南
   
 
   </title>
@@ -84,89 +84,114 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="15005564120900.html">Numpy 入门笔记（一）</a></h1>
-			<p class="meta"><time datetime="2017-07-20T21:13:32+08:00" 
-			pubdate data-updated="true">2017/7/20</time></p>
+		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
+			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">1.一维数组的转换</h2>
-
-<p>方法：np.transpose([target])</p>
-
-<pre><code class="language-In">Out[5]: array([1, 2, 3, 4])
-
-In [6]: b = np.transpose([a])
-
-In [7]: b
-Out[7]: 
-array([[1],
-       [2],
-       [3],
-       [4]])
-</code></pre>
-
-<h2 id="toc_1">2.返回数组的行或列的大小</h2>
-
-<p>方法：</p>
+		  	<h2 id="toc_0">tile函数</h2>
 
 <ul>
-<li>target.shape[0] -&gt;返回行的大小</li>
-<li>target.shape[1] -&gt;返回列的大小</li>
-<li>target.shape -&gt;返回行和列的大小</li>
+<li><p>Parameters（参数）</p>
+
+<p>A : array_like<br/>
+    The input array.<br/>
+    输入参数是数组</p>
+
+<p>reps : array_like<br/>
+    The number of repetitions of <code>A</code> along each axis.<br/>
+    重复reps次</p></li>
+<li><p>Returns<br/>
+c : ndarray<br/>
+    The tiled output array.</p></li>
 </ul>
 
-<pre><code>In [9]: b.shape
-Out[9]: (4, 1)
+<h3 id="toc_1">Examples</h3>
 
-In [10]: b.shape[0]
-Out[10]: 4
-
-In [11]: b.shape[1]
-Out[11]: 1
-
-
+<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
+     &gt;&gt;&gt; np.tile(a, 2)
+    array([0, 1, 2, 0, 1, 2])
+    #数组a的内容重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 2))
+    array([[0, 1, 2, 0, 1, 2],
+       [0, 1, 2, 0, 1, 2]])
+       #数组a的内容在行方向上重复2次，列方向上重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
+    array([[[0, 1, 2, 0, 1, 2]],
+       [[0, 1, 2, 0, 1, 2]]])
+       ==可在三维上重复==
+    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
+    &gt;&gt;&gt; np.tile(b, 2)
+    array([[1, 2, 1, 2],
+       [3, 4, 3, 4]])
+    &gt;&gt;&gt; np.tile(b, (2, 1))
+    array([[1, 2],
+       [3, 4],
+       [1, 2],
+       [3, 4]])
+    &gt;&gt;&gt; c = np.array([1,2,3,4])
+    &gt;&gt;&gt; np.tile(c,(4,1))
+    array([[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]])
 </code></pre>
 
-<h2 id="toc_2">3.返回第x行的所有值；返回第x列的所有值</h2>
+<h2 id="toc_2">zeros函数</h2>
 
-<p>方法：<br/>
-- target[x,:] -&gt;返回第x行的所有元素值，返回值是数组类型<br/>
-- target[:,x] -&gt;返回第x列的所有元素值，返回值是数组类型</p>
+<blockquote>
+<blockquote>
+<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
+</blockquote>
+</blockquote>
 
-<pre><code>In [46]: target
-Out[46]: 
-array([[&#39;0&#39;, &#39;A&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;0&#39;, &#39;A&#39;],
-       [&#39;0&#39;, &#39;A&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;1&#39;, &#39;B&#39;],
-       [&#39;0&#39;, &#39;A&#39;]],
-      dtype=&#39;|S21&#39;)
+<p>Return a new array of given shape and type, filled with zeros.<br/>
+根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
 
-In [47]: target[2,:]
-Out[47]: 
-array([&#39;1&#39;, &#39;B&#39;],
-      dtype=&#39;|S21&#39;)
+<h3 id="toc_3">examples</h3>
 
-In [48]: target[5,:]
-Out[48]: 
-array([&#39;1&#39;, &#39;B&#39;],
-      dtype=&#39;|S21&#39;)
+<pre><code>&gt;&gt;np.zeros(5)
+array([ 0., 0., 0., 0., 0.])
+&gt;&gt;
+np.zeros((5,), dtype=np.int)
+array([0, 0, 0, 0, 0])
+&gt;&gt;
+np.zeros((2, 1))
+array([[ 0.], [ 0.]])
+&gt;&gt;
+s = (2,2)
+np.zeros(s)
+np.zeros(s)
+array([[ 0., 0.], [ 0., 0.]])
+&gt;&gt;
+np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+</code></pre>
 
-In [49]: target[:,0]
-Out[49]: 
-array([&#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;, &#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;],
-      dtype=&#39;|S21&#39;)
+<h2 id="toc_4">dot函数</h2>
 
-In [50]: target[:,1]
-Out[50]: 
-array([&#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;, &#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;],
-      dtype=&#39;|S21&#39;)
+<blockquote>
+<p>numpy.dot(a, b, out=None)</p>
+</blockquote>
+
+<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+
+<h3 id="toc_5">examples</h3>
+
+<pre><code>&gt;&gt;&gt; np.dot(3, 4)
+12
 
 
+&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+
+
+&gt;&gt;&gt; a = [[1, 0], [0, 1]]
+&gt;&gt;&gt; b = [[4, 1], [2, 2]]
+&gt;&gt;&gt; np.dot(a, b)
+array([[4, 1],
+   [2, 2]])
 </code></pre>
 
 
@@ -177,9 +202,9 @@ array([&#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;, &#39;A&#39;, &#39;B&#
 	</article>
   
 	<div class="pagination">
-	 <a class="prev" href="all_2.html">&larr; Older</a> 
+	 <a class="prev" href="Python进阶_3.html">&larr; Older</a> 
 <a href="archives.html">Blog Archives</a>
-	 <a class="next" href="all.html">Newer &rarr;</a>  
+	 <a class="next" href="Python进阶_1.html">Newer &rarr;</a>  
 	    
 	</div>
 </div>

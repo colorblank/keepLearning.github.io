@@ -84,195 +84,51 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997729082239.html">TensorFlow框架入门</a></h1>
-			<p class="meta"><time datetime="2017-07-11T19:35:08+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
+		  	<h1 class="entry-title"><a href="15004362772943.html">卷积神经网络入门</a></h1>
+			<p class="meta"><time datetime="2017-07-19T11:51:17+08:00" 
+			pubdate data-updated="true">2017/7/19</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">1.采用MNIST数据集实现单层线性分类模型</h2>
+		  	<h2 id="toc_0">1.梯度下降（Gradient Descent）和反向传播（Back propagation）</h2>
 
-<p>环境：Python 2.7.13 + TensorFlow 1.2.1<br/>
-系统：macos</p>
-
-<p>MNIST是手写数字的图像数据集，常用于机器学习的训练。</p>
-
-<h3 id="toc_1">加载MNIST数据集</h3>
-
-<p>Python命令行（建议用ipython）执行以下命令：</p>
-
-<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
-</code></pre>
-
-<p>以下表示MNIST数据集加载成功：</p>
-
-<pre><code class="language-shell">Extracting MNIST_data/train-images-idx3-ubyte.gz
-Extracting MNIST_data/train-labels-idx1-ubyte.gz
-Extracting MNIST_data/t10k-images-idx3-ubyte.gz
-Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
-
-</code></pre>
-
-<h3 id="toc_2">启动TensorFlow InteractiveSession</h3>
-
-<p>TensorFlow程序的常见用法是首先创建一个图形，然后在会话中启动它。如下：</p>
-
-<pre><code class="language-Python">import tensorflow as tf
-matrix1 = tf.constant([[3., 3]])
-matrix2 = tf.constant([[2.], [2.]])
-product = tf.matmul(matrix1, matrix2)
-sess= tf.Session()
-result = sess.run(product)
-print result
-sess.close()
-</code></pre>
-
-<p>而在较为复杂的模型当中，可以采用InteractiveSession类。因为它允许在运行图的时候插入计算图。这使得编程更加灵活。如下：</p>
-
-<pre><code class="language-Python">import tensorflow as tf
-sess = tf.InteractiveSession()
-</code></pre>
-
-<p><mark>注意：Mac可能会遇到如下提示，但不影响使用，请直接忽略</mark></p>
-
-<pre><code>2017-07-13 14:34:56.142538: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142569: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142579: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
-2017-07-13 14:34:56.142589: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
-</code></pre>
-
-<h3 id="toc_3">建立一个Softmax回归模型</h3>
-
-<ol>
-<li>占位符</li>
-</ol>
-
-<p>我们需要一个输入图像（矩阵类型）和目标输出类（一般是数字，以向量或矩阵形式展现）创建节点来开始构建计算图</p>
-
-<pre><code class="language-Python">x = tf.placeholder(tf.float32, shape=[None, 784])
-y_ = tf.placeholder(tf.float32, shape=[None, 10])
-</code></pre>
+<h3 id="toc_1">梯度下降</h3>
 
 <ul>
-<li>tf.placeholder代表占位符，在数学角度可以理解为未知量</li>
-<li>shape代表矩阵的形状，第一个参数为None代表第一个维度未知，在这个模型中代表图片的数量；第二个参数是图片28*28像素构成的单一MNIST图片平铺而成的维度</li>
-<li>y_在这个模型中代表图片对应的数字，即正确结果。它也是一个二维矩阵，行数代表图片数量，每一行有十个数，代表对应数字。</li>
+<li><p>梯度：函数在某一点的梯度是一个自变量空间内的向量。自变量顺着梯度方向变化时函数值上升得最快。梯度的模（长度）是函数值上升的速率。梯度朝某方向投影的长度是自变量顺着该方向变化时函数值的变化率.</p></li>
+<li><p>梯度下降算法：在现实世界中，梯度可以更为直观的理解为坡度。想象在一座山坡上，你想最快地下山。山坡越陡峭，迈相同的步子下山就越快。当然，在机器学习的相关模型中，我们无法选择梯度（山坡的坡度），起始点是可以选择的（在哪个位置下山），学习效率（learning rate，就是下山的步子大小）也是可以选择的。<br/>
+根据上面的例子，我们可以理解为我们在山坡的某一点要到山下某一个平地上（坡度为零）。</p>
+
+<h3 id="toc_2">为什么要梯度下降</h3>
+
+<p>梯度下降算法是为了解决最小化损失函数而提出的。损失函数可以参考<a href="14941558480316.html">Loss Function 损失函数</a>。简单地说，我们希望模型预测值和真实值的误差越小越好，所以我们用损失函数来衡量这些误差。<br/>
+损失函数既然是一个函数，我们在坐标系中可以将它描绘出来（只要它没有超过三维，超过好像也是有办法描绘的，不够不太好理解）。我们举最简单例子（纵坐标表示损失函数的大小，横坐标表示可以调整的参数）：<br/>
+<img src="media/15004362772943/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-19%20%E4%B8%8B%E5%8D%883.15.jpg" alt="屏幕快照 2017-07-19 下午3.15"/></p></li>
 </ul>
 
-<p>2.变量</p>
+<p>如果我们在这个函数的山坡上，想到达海拔最低的地方。显然，我们会到达横坐标为3附近的点。因为这个地方是坡底，坡度为0，也就是梯度为零。<br/>
+推广到三维坐标系下，我们可以看看：<br/>
+<img src="media/15004362772943/1042406-20161017221342935-1872962415.png" alt="1042406-20161017221342935-1872962415"/><br/>
+在不同的出发点出发，我们根据坡度最陡峭的方向（梯度）往山下走，如图所示，我们可能会走到不同的坡底。这是因为我们往往无法知道全局的形状，指引我们下山的是坡度（梯度）。因此，我们可能会遇到局部最小值，也就是说，我们跑到了坡底，我们无法知道有没有另一个坡底，比这个坡底海拔还要低。这也是梯度下降算法的一个弊端：无法确定是否是全局最小，而不是局部最小。</p>
 
-<p>我们现在定义模型的权重W和偏置b。W和b的类型是Variable，即变量。因为我们需要的是不断地调整这两个变量，使得输出量和目标量相同。（简单地说，就是不断调整参数，使得计算机判断图片代表的数字是正确的）。</p>
-
-<pre><code class="language-Python">W = tf.Variable(tf.zeros([784,10]))
-b = tf.Variable(tf.zeros([10]))
-</code></pre>
+<h3 id="toc_3">反向传播</h3>
 
 <ul>
-<li>W是784*10的矩阵，矩阵元素全部为零</li>
-<li>b是10*1的矩阵，矩阵元素全部为零</li>
+<li>概念：反向传播算法是应用于神经网络，为了解决深层参数训练问题而提出的。<mark>它的本质是通过链式法则求得神经网络中所有节点的梯度。</mark></li>
 </ul>
 
-<p>3.变量的初始化</p>
+<h2 id="toc_4">2.卷积与池化</h2>
 
-<pre><code class="language-Python">sess.run(tf.global_variables_initializer())
-</code></pre>
+<p>卷积层：对图像进行卷积操作。</p>
 
-<p>4.预测类和损失函数</p>
+<p>池化层：对输入的特征图进行压缩，一方面使特征图变小，简化网络计算复杂度；一方面进行特征压缩，一般在ixi的区域内取平均或最大值，作为新的特征图的元素。同时，池化层还有防止过度拟合的作用。<br/>
+<img src="media/15004362772943/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-07-19%20%E4%B8%8B%E5%8D%887.57.49.png" alt="屏幕快照 2017-07-19 下午7.57.49"/></p>
 
-<pre><code class="language-python">y = tf.matmul(x,W) + b
+<p>如上如图所示，这是max pool的方式进行池化，即取最大值的方式。可以看到，左侧4x4矩阵的右上角2x2的部分，其最大值是6，对应右侧矩阵第一个元素。</p>
 
-cross_entropy = tf.reduce_mean(
-    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
-</code></pre>
+<h2 id="toc_5">卷积神经网络的一般流程</h2>
 
-<p>5.训练模型</p>
-
-<pre><code class="language-python">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
-
-for _ in range(1000):
-  batch = mnist.train.next_batch(100)
-  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
-</code></pre>
-
-<p>6.评估模型</p>
-
-<pre><code class="language-python">correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
-#结果：0.9208
-</code></pre>
-
-<pre><code>In [6]: correct_prediction
-Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
-</code></pre>
-
-<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
-
-<pre><code>In [8]: accuracy
-Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
-</code></pre>
-
-<pre><code>In [10]: accuracy.eval?
-Signature: accuracy.eval(feed_dict=None, session=None)
-Docstring:
-
-Evaluates this tensor in a `Session`.
-
-Calling this method will execute all preceding operations that
-produce the inputs needed for the operation that produces this
-tensor.
-
-*N.B.* Before invoking `Tensor.eval()`, its graph must have been
-launched in a session, and either a default session must be
-available, or `session` must be specified explicitly.
-
-Args:
-  feed_dict: A dictionary that maps `Tensor` objects to feed values.
-    See @{tf.Session.run} for a
-    description of the valid feed values.
-  session: (Optional.) The `Session` to be used to evaluate this tensor. If
-    none, the default session will be used.
-
-Returns:
-  A numpy array corresponding to the value of this tensor.
-File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
-Type:      instancemethod
-
-
-</code></pre>
-
-<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
-
-<p>8.代码总结</p>
-
-<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
-import tensorflow as tf
-
-sess = tf.InteractiveSession()
-
-x = tf.placeholder(tf.float32, shape=[None, 784])
-y_ = tf.placeholder(tf.float32, shape=[None, 10])
-W = tf.Variable(tf.zeros([784,10]))
-b = tf.Variable(tf.zeros([10]))
-sess.run(tf.global_variables_initializer())
-y = tf.matmul(x,W) + b
-
-cross_entropy = tf.reduce_mean(
-    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
-train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
-
-for _ in range(1000):
-  batch = mnist.train.next_batch(100)
-  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
-
-correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
-</code></pre>
+<p><img src="media/15004362772943/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt="未命名文件"/></p>
 
 
 		</div>
@@ -295,7 +151,7 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -323,7 +179,19 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -340,16 +208,8 @@ print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  

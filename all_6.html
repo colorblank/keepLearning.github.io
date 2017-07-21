@@ -84,66 +84,114 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997580410995.html">人脸检测实例</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:27:21+08:00" 
+		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
+			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">Code:</h2>
+		  	<h2 id="toc_0">tile函数</h2>
 
-<pre><code class="language-python">#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-&quot;&quot;&quot;
-Created on Sun Apr 23 14:13:01 2017
+<ul>
+<li><p>Parameters（参数）</p>
 
-@author: zhang
-&quot;&quot;&quot;
+<p>A : array_like<br/>
+    The input array.<br/>
+    输入参数是数组</p>
 
-#import numpy as np
-import cv2
-#from matplotlib import pyplot as plt
-cascade_fn = &#39;/Users/zhang/anaconda/pkgs/opencv-2.4.11-py27_1/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml&#39;
-cascade = cv2.CascadeClassifier(cascade_fn)
-eye_cascade = cv2.CascadeClassifier(&#39;haarcascade_eye.xml&#39;)
-def face_detect(img, cascade):
-     face = cascade.detectMultiScale(gray, scaleFactor=1.3,minNeighbors=5, minSize=(30, 30))
-     
-     return face
+<p>reps : array_like<br/>
+    The number of repetitions of <code>A</code> along each axis.<br/>
+    重复reps次</p></li>
+<li><p>Returns<br/>
+c : ndarray<br/>
+    The tiled output array.</p></li>
+</ul>
+
+<h3 id="toc_1">Examples</h3>
+
+<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
+     &gt;&gt;&gt; np.tile(a, 2)
+    array([0, 1, 2, 0, 1, 2])
+    #数组a的内容重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 2))
+    array([[0, 1, 2, 0, 1, 2],
+       [0, 1, 2, 0, 1, 2]])
+       #数组a的内容在行方向上重复2次，列方向上重复2次
+    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
+    array([[[0, 1, 2, 0, 1, 2]],
+       [[0, 1, 2, 0, 1, 2]]])
+       ==可在三维上重复==
+    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
+    &gt;&gt;&gt; np.tile(b, 2)
+    array([[1, 2, 1, 2],
+       [3, 4, 3, 4]])
+    &gt;&gt;&gt; np.tile(b, (2, 1))
+    array([[1, 2],
+       [3, 4],
+       [1, 2],
+       [3, 4]])
+    &gt;&gt;&gt; c = np.array([1,2,3,4])
+    &gt;&gt;&gt; np.tile(c,(4,1))
+    array([[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]])
+</code></pre>
+
+<h2 id="toc_2">zeros函数</h2>
+
+<blockquote>
+<blockquote>
+<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
+</blockquote>
+</blockquote>
+
+<p>Return a new array of given shape and type, filled with zeros.<br/>
+根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+
+<h3 id="toc_3">examples</h3>
+
+<pre><code>&gt;&gt;np.zeros(5)
+array([ 0., 0., 0., 0., 0.])
+&gt;&gt;
+np.zeros((5,), dtype=np.int)
+array([0, 0, 0, 0, 0])
+&gt;&gt;
+np.zeros((2, 1))
+array([[ 0.], [ 0.]])
+&gt;&gt;
+s = (2,2)
+np.zeros(s)
+np.zeros(s)
+array([[ 0., 0.], [ 0., 0.]])
+&gt;&gt;
+np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
+array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+</code></pre>
+
+<h2 id="toc_4">dot函数</h2>
+
+<blockquote>
+<p>numpy.dot(a, b, out=None)</p>
+</blockquote>
+
+<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+
+<h3 id="toc_5">examples</h3>
+
+<pre><code>&gt;&gt;&gt; np.dot(3, 4)
+12
 
 
-def eyes_detect(img,eye_cascade):
-    eyes = eye_cascade.detectMultiScale(img)
-    return eyes
-    
-def draw_face(img, rects, color):
-    for x,y,w,h in rects:
-        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
-    
-def draw_eyes(img,eyes,color):
-    for x,y,w,h in eyes:
-        cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)  
-    
-if __name__ == &#39;__main__&#39;:
-    color = (0,0,255)#red
-    point1 = ()
-    cap = cv2.VideoCapture(0)
-    while(True):
-        ret, frame = cap.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        rectangle = face_detect(gray,cascade)
-        draw_face(frame,rectangle,color)
-        
-        eyes = eyes_detect(gray,eye_cascade)
-        draw_eyes(frame,eyes,(255,0,0))
-        cv2.imshow(&#39;frame&#39;,frame)
-        if cv2.waitKey(25) &amp; 0xFF == ord(&#39;q&#39;):
-            break
-    
-    cap.release()
-    cv2.destroyAllWindows()
-    exit()
+&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+
+
+&gt;&gt;&gt; a = [[1, 0], [0, 1]]
+&gt;&gt;&gt; b = [[4, 1], [2, 2]]
+&gt;&gt;&gt; np.dot(a, b)
+array([[4, 1],
+   [2, 2]])
 </code></pre>
 
 
@@ -167,7 +215,7 @@ if __name__ == &#39;__main__&#39;:
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -195,7 +243,19 @@ if __name__ == &#39;__main__&#39;:
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -212,16 +272,8 @@ if __name__ == &#39;__main__&#39;:
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  

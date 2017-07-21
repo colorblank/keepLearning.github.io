@@ -84,114 +84,53 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
+		  	<h1 class="entry-title"><a href="15006447870145.html">Python字符串操作笔记（一）</a></h1>
+			<p class="meta"><time datetime="2017-07-21T21:46:27+08:00" 
+			pubdate data-updated="true">2017/7/21</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">tile函数</h2>
+		  	<h2 id="toc_0">1.根据某一字符分割字符串</h2>
+
+<h3 id="toc_1">方法一：使用split()</h3>
+
+<p>语法：<br/>
+<code>str.split(str=&quot;&quot;, num=string.count(str)).</code></p>
 
 <ul>
-<li><p>Parameters（参数）</p>
-
-<p>A : array_like<br/>
-    The input array.<br/>
-    输入参数是数组</p>
-
-<p>reps : array_like<br/>
-    The number of repetitions of <code>A</code> along each axis.<br/>
-    重复reps次</p></li>
-<li><p>Returns<br/>
-c : ndarray<br/>
-    The tiled output array.</p></li>
+<li>str -- 分隔符，默认为所有的空字符，包括空格、换行(\n)、制表符(\t)等，也可以指定字符。</li>
+<li>num -- 分割次数</li>
 </ul>
 
-<h3 id="toc_1">Examples</h3>
+<hr/>
 
-<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
-     &gt;&gt;&gt; np.tile(a, 2)
-    array([0, 1, 2, 0, 1, 2])
-    #数组a的内容重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 2))
-    array([[0, 1, 2, 0, 1, 2],
-       [0, 1, 2, 0, 1, 2]])
-       #数组a的内容在行方向上重复2次，列方向上重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
-    array([[[0, 1, 2, 0, 1, 2]],
-       [[0, 1, 2, 0, 1, 2]]])
-       ==可在三维上重复==
-    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
-    &gt;&gt;&gt; np.tile(b, 2)
-    array([[1, 2, 1, 2],
-       [3, 4, 3, 4]])
-    &gt;&gt;&gt; np.tile(b, (2, 1))
-    array([[1, 2],
-       [3, 4],
-       [1, 2],
-       [3, 4]])
-    &gt;&gt;&gt; c = np.array([1,2,3,4])
-    &gt;&gt;&gt; np.tile(c,(4,1))
-    array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
-</code></pre>
+<p>常见操作：</p>
 
-<h2 id="toc_2">zeros函数</h2>
+<ul>
+<li><p>分割文件名</p>
 
-<blockquote>
-<blockquote>
-<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
-</blockquote>
-</blockquote>
+<p>使用split()来分割字符串返回值是list列表类型，将字符串一分为二，或者多分也是可以的。</p></li>
+</ul>
 
-<p>Return a new array of given shape and type, filled with zeros.<br/>
-根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
+<pre><code>In [51]: str = &quot;user001.jpg&quot;
 
-<h3 id="toc_3">examples</h3>
+In [52]: str.split(&#39;.&#39;)
+Out[52]: [&#39;user001&#39;, &#39;jpg&#39;]
 
-<pre><code>&gt;&gt;np.zeros(5)
-array([ 0., 0., 0., 0., 0.])
-&gt;&gt;
-np.zeros((5,), dtype=np.int)
-array([0, 0, 0, 0, 0])
-&gt;&gt;
-np.zeros((2, 1))
-array([[ 0.], [ 0.]])
-&gt;&gt;
-s = (2,2)
-np.zeros(s)
-np.zeros(s)
-array([[ 0., 0.], [ 0., 0.]])
-&gt;&gt;
-np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
-</code></pre>
+In [53]: a = str.split(&#39;.&#39;)
 
-<h2 id="toc_4">dot函数</h2>
+In [54]: a
+Out[54]: [&#39;user001&#39;, &#39;jpg&#39;]
 
-<blockquote>
-<p>numpy.dot(a, b, out=None)</p>
-</blockquote>
+In [55]: a[0]
+Out[55]: &#39;user001&#39;
 
-<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+In [56]: a[1]
+Out[56]: &#39;jpg&#39;
 
-<h3 id="toc_5">examples</h3>
+In [57]: type(a)
+Out[57]: list
 
-<pre><code>&gt;&gt;&gt; np.dot(3, 4)
-12
-
-
-&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
-(-13+0j)
-
-
-&gt;&gt;&gt; a = [[1, 0], [0, 1]]
-&gt;&gt;&gt; b = [[4, 1], [2, 2]]
-&gt;&gt;&gt; np.dot(a, b)
-array([[4, 1],
-   [2, 2]])
 </code></pre>
 
 
@@ -215,7 +154,7 @@ array([[4, 1],
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -243,7 +182,19 @@ array([[4, 1],
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -260,16 +211,8 @@ array([[4, 1],
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  

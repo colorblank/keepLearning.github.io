@@ -84,114 +84,194 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581396138.html">numpy常见函数</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:59+08:00" 
+		  	<h1 class="entry-title"><a href="14997729082239.html">TensorFlow框架入门</a></h1>
+			<p class="meta"><time datetime="2017-07-11T19:35:08+08:00" 
 			pubdate data-updated="true">2017/7/11</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<h2 id="toc_0">tile函数</h2>
+		  	<h2 id="toc_0">1.采用MNIST数据集实现单层线性分类模型</h2>
+
+<p>环境：Python 2.7.13 + TensorFlow 1.2.1<br/>
+系统：macos</p>
+
+<p>MNIST是手写数字的图像数据集，常用于机器学习的训练。</p>
+
+<h3 id="toc_1">加载MNIST数据集</h3>
+
+<p>Python命令行（建议用ipython）执行以下命令：</p>
+
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
+</code></pre>
+
+<p>以下表示MNIST数据集加载成功：</p>
+
+<pre><code class="language-shell">Extracting MNIST_data/train-images-idx3-ubyte.gz
+Extracting MNIST_data/train-labels-idx1-ubyte.gz
+Extracting MNIST_data/t10k-images-idx3-ubyte.gz
+Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
+
+</code></pre>
+
+<h3 id="toc_2">启动TensorFlow InteractiveSession</h3>
+
+<p>TensorFlow程序的常见用法是首先创建一个图形，然后在会话中启动它。如下：</p>
+
+<pre><code class="language-Python">import tensorflow as tf
+matrix1 = tf.constant([[3., 3]])
+matrix2 = tf.constant([[2.], [2.]])
+product = tf.matmul(matrix1, matrix2)
+sess= tf.Session()
+result = sess.run(product)
+print result
+sess.close()
+</code></pre>
+
+<p>而在较为复杂的模型当中，可以采用InteractiveSession类。因为它允许在运行图的时候插入计算图。这使得编程更加灵活。如下：</p>
+
+<pre><code class="language-Python">import tensorflow as tf
+sess = tf.InteractiveSession()
+</code></pre>
+
+<p><mark>注意：Mac可能会遇到如下提示，但不影响使用，请直接忽略</mark></p>
+
+<pre><code>2017-07-13 14:34:56.142538: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142569: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142579: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-07-13 14:34:56.142589: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn&#39;t compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+</code></pre>
+
+<h3 id="toc_3">建立一个Softmax回归模型</h3>
+
+<ol>
+<li>占位符</li>
+</ol>
+
+<p>我们需要一个输入图像（矩阵类型）和目标输出类（一般是数字，以向量或矩阵形式展现）创建节点来开始构建计算图</p>
+
+<pre><code class="language-Python">x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+</code></pre>
 
 <ul>
-<li><p>Parameters（参数）</p>
-
-<p>A : array_like<br/>
-    The input array.<br/>
-    输入参数是数组</p>
-
-<p>reps : array_like<br/>
-    The number of repetitions of <code>A</code> along each axis.<br/>
-    重复reps次</p></li>
-<li><p>Returns<br/>
-c : ndarray<br/>
-    The tiled output array.</p></li>
+<li>tf.placeholder代表占位符，在数学角度可以理解为未知量</li>
+<li>shape代表矩阵的形状，第一个参数为None代表第一个维度未知，在这个模型中代表图片的数量；第二个参数是图片28*28像素构成的单一MNIST图片平铺而成的维度</li>
+<li>y_在这个模型中代表图片对应的数字，即正确结果。它也是一个二维矩阵，行数代表图片数量，每一行有十个数，代表对应数字。</li>
 </ul>
 
-<h3 id="toc_1">Examples</h3>
+<p>2.变量</p>
 
-<pre><code>    &gt;&gt;&gt; a = np.array([0, 1, 2])
-     &gt;&gt;&gt; np.tile(a, 2)
-    array([0, 1, 2, 0, 1, 2])
-    #数组a的内容重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 2))
-    array([[0, 1, 2, 0, 1, 2],
-       [0, 1, 2, 0, 1, 2]])
-       #数组a的内容在行方向上重复2次，列方向上重复2次
-    &gt;&gt;&gt; np.tile(a, (2, 1, 2))
-    array([[[0, 1, 2, 0, 1, 2]],
-       [[0, 1, 2, 0, 1, 2]]])
-       ==可在三维上重复==
-    &gt;&gt;&gt; b = np.array([[1, 2], [3, 4]])
-    &gt;&gt;&gt; np.tile(b, 2)
-    array([[1, 2, 1, 2],
-       [3, 4, 3, 4]])
-    &gt;&gt;&gt; np.tile(b, (2, 1))
-    array([[1, 2],
-       [3, 4],
-       [1, 2],
-       [3, 4]])
-    &gt;&gt;&gt; c = np.array([1,2,3,4])
-    &gt;&gt;&gt; np.tile(c,(4,1))
-    array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
+<p>我们现在定义模型的权重W和偏置b。W和b的类型是Variable，即变量。因为我们需要的是不断地调整这两个变量，使得输出量和目标量相同。（简单地说，就是不断调整参数，使得计算机判断图片代表的数字是正确的）。</p>
+
+<pre><code class="language-Python">W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
 </code></pre>
 
-<h2 id="toc_2">zeros函数</h2>
+<ul>
+<li>W是784*10的矩阵，矩阵元素全部为零</li>
+<li>b是10*1的矩阵，矩阵元素全部为零</li>
+</ul>
 
-<blockquote>
-<blockquote>
-<p>def zeros(shape, dtype=float, order=&#39;C&#39;)</p>
-</blockquote>
-</blockquote>
+<p>3.变量的初始化</p>
 
-<p>Return a new array of given shape and type, filled with zeros.<br/>
-根据指定形状和类型返回一个新的数组，数组内容全部为零。</p>
-
-<h3 id="toc_3">examples</h3>
-
-<pre><code>&gt;&gt;np.zeros(5)
-array([ 0., 0., 0., 0., 0.])
-&gt;&gt;
-np.zeros((5,), dtype=np.int)
-array([0, 0, 0, 0, 0])
-&gt;&gt;
-np.zeros((2, 1))
-array([[ 0.], [ 0.]])
-&gt;&gt;
-s = (2,2)
-np.zeros(s)
-np.zeros(s)
-array([[ 0., 0.], [ 0., 0.]])
-&gt;&gt;
-np.zeros((2,), dtype=[(&#39;x&#39;, &#39;i4&#39;),      (&#39;y&#39;, &#39;i4&#39;)]) # custom dtype
-array([(0, 0), (0, 0)], dtype=[(&#39;x&#39;, &#39;&lt;i4&#39;), (&#39;y&#39;, &#39;&lt;i4&#39;)])
+<pre><code class="language-Python">sess.run(tf.global_variables_initializer())
 </code></pre>
 
-<h2 id="toc_4">dot函数</h2>
+<p>4.预测类和损失函数</p>
 
-<blockquote>
-<p>numpy.dot(a, b, out=None)</p>
-</blockquote>
+<pre><code class="language-python">y = tf.matmul(x,W) + b
 
-<p>dot函数是矩阵点积，一维返回值是数值，二维返回矩阵</p>
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+</code></pre>
 
-<h3 id="toc_5">examples</h3>
+<p>5.训练模型</p>
 
-<pre><code>&gt;&gt;&gt; np.dot(3, 4)
-12
+<pre><code class="language-python">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+</code></pre>
+
+<p>6.评估模型</p>
+
+<pre><code class="language-python">correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+#结果：0.9208
+</code></pre>
+
+<pre><code>In [6]: correct_prediction
+Out[6]: &lt;tf.Tensor &#39;Equal:0&#39; shape=(?,) dtype=bool&gt;
+</code></pre>
+
+<p>可以看出correct_prediction是布尔型的一个大小未知的列表</p>
+
+<pre><code>In [8]: accuracy
+Out[8]: &lt;tf.Tensor &#39;Mean_1:0&#39; shape=() dtype=float32&gt;
+</code></pre>
+
+<pre><code>In [10]: accuracy.eval?
+Signature: accuracy.eval(feed_dict=None, session=None)
+Docstring:
+
+Evaluates this tensor in a `Session`.
+
+Calling this method will execute all preceding operations that
+produce the inputs needed for the operation that produces this
+tensor.
+
+*N.B.* Before invoking `Tensor.eval()`, its graph must have been
+launched in a session, and either a default session must be
+available, or `session` must be specified explicitly.
+
+Args:
+  feed_dict: A dictionary that maps `Tensor` objects to feed values.
+    See @{tf.Session.run} for a
+    description of the valid feed values.
+  session: (Optional.) The `Session` to be used to evaluate this tensor. If
+    none, the default session will be used.
+
+Returns:
+  A numpy array corresponding to the value of this tensor.
+File:      ~/anaconda/lib/python2.7/site-packages/tensorflow/python/framework/ops.py
+Type:      instancemethod
 
 
-&gt;&gt;&gt; np.dot([2j, 3j], [2j, 3j])
-(-13+0j)
+</code></pre>
 
+<p>accuracy.eval是用于评估对手写数字识别结果的准确率。</p>
 
-&gt;&gt;&gt; a = [[1, 0], [0, 1]]
-&gt;&gt;&gt; b = [[4, 1], [2, 2]]
-&gt;&gt;&gt; np.dot(a, b)
-array([[4, 1],
-   [2, 2]])
+<p>8.代码总结</p>
+
+<pre><code class="language-Python">from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets(&#39;MNIST_data&#39;, one_hot=True)
+import tensorflow as tf
+
+sess = tf.InteractiveSession()
+
+x = tf.placeholder(tf.float32, shape=[None, 784])
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+W = tf.Variable(tf.zeros([784,10]))
+b = tf.Variable(tf.zeros([10]))
+sess.run(tf.global_variables_initializer())
+y = tf.matmul(x,W) + b
+
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+for _ in range(1000):
+  batch = mnist.train.next_batch(100)
+  train_step.run(feed_dict={x: batch[0], y_: batch[1]})
+
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 </code></pre>
 
 
@@ -215,7 +295,7 @@ array([[4, 1],
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -243,7 +323,19 @@ array([[4, 1],
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -260,16 +352,8 @@ array([[4, 1],
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  

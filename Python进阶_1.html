@@ -84,43 +84,90 @@ $(document).ready(function(event) {
 
 	<article>
 		 <header>
-		  	<h1 class="entry-title"><a href="14997581073792.html">Matplotlib by Example</a></h1>
-			<p class="meta"><time datetime="2017-07-11T15:28:27+08:00" 
-			pubdate data-updated="true">2017/7/11</time></p>
+		  	<h1 class="entry-title"><a href="15005564120900.html">Numpy 入门笔记（一）</a></h1>
+			<p class="meta"><time datetime="2017-07-20T21:13:32+08:00" 
+			pubdate data-updated="true">2017/7/20</time></p>
 		 </header>
 	  	<div class="entry-content">
 		  	
-		  	<p>matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。</p>
+		  	<h2 id="toc_0">1.一维数组的转换</h2>
 
-<p>它的文档相当完备，并且 <a href="http://matplotlib.org/gallery.html">Gallery页面 </a>中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。</p>
+<p>方法：np.transpose([target])</p>
 
-<p>本篇作为matplotlib的入门介绍，将较为深入地挖掘几个例子，从中理解和学习matplotlib绘图的一些基本概念。</p>
+<pre><code class="language-In">Out[5]: array([1, 2, 3, 4])
 
-<h2 id="toc_0">实例一 画圆</h2>
+In [6]: b = np.transpose([a])
 
-<pre><code class="language-Python">import matplotlib.pyplot as plt
-circle1 = plt.Circle((2, 1.6), radius=1, fill = False)
-#产生一个原点为（2，1.6），半径为1的圆
-circle2 = plt.Circle((2, 1.6), radius=2, fill = False)
-#产生一个原点为（2，1.6），半径为2的圆
-plt.gca().add_patch(circle1)
-#将圆1添加到坐标轴上
-plt.gca().add_patch(circle2)
-plt.axis(&#39;scaled&#39;)
-#等比例缩放
-plt.plot([1,1,2,2,1], [1,2,1,2,4], &#39;ro&#39;)
-#画出（1，1），（1，2）等点，第一个方括号是x轴参数，第二个是y轴参数，‘ro’是红色圆点
-plt.plot([3,3,3,2,1], [1,2,3,3,2.2], &#39;bs&#39;)
-#‘bs’是蓝色
-plt.plot([2], [1.6], &#39;g^&#39;)
-plt.axis([-2,6,-2,6])
-plt.title(&#39;circle example&#39;)
-plt.show()
+In [7]: b
+Out[7]: 
+array([[1],
+       [2],
+       [3],
+       [4]])
 </code></pre>
 
-<p>结果如下：</p>
+<h2 id="toc_1">2.返回数组的行或列的大小</h2>
 
-<p><img src="media/14997563845849/figure_1.png" alt="figure_1"/></p>
+<p>方法：</p>
+
+<ul>
+<li>target.shape[0] -&gt;返回行的大小</li>
+<li>target.shape[1] -&gt;返回列的大小</li>
+<li>target.shape -&gt;返回行和列的大小</li>
+</ul>
+
+<pre><code>In [9]: b.shape
+Out[9]: (4, 1)
+
+In [10]: b.shape[0]
+Out[10]: 4
+
+In [11]: b.shape[1]
+Out[11]: 1
+
+
+</code></pre>
+
+<h2 id="toc_2">3.返回第x行的所有值；返回第x列的所有值</h2>
+
+<p>方法：<br/>
+- target[x,:] -&gt;返回第x行的所有元素值，返回值是数组类型<br/>
+- target[:,x] -&gt;返回第x列的所有元素值，返回值是数组类型</p>
+
+<pre><code>In [46]: target
+Out[46]: 
+array([[&#39;0&#39;, &#39;A&#39;],
+       [&#39;1&#39;, &#39;B&#39;],
+       [&#39;1&#39;, &#39;B&#39;],
+       [&#39;0&#39;, &#39;A&#39;],
+       [&#39;0&#39;, &#39;A&#39;],
+       [&#39;1&#39;, &#39;B&#39;],
+       [&#39;1&#39;, &#39;B&#39;],
+       [&#39;0&#39;, &#39;A&#39;]],
+      dtype=&#39;|S21&#39;)
+
+In [47]: target[2,:]
+Out[47]: 
+array([&#39;1&#39;, &#39;B&#39;],
+      dtype=&#39;|S21&#39;)
+
+In [48]: target[5,:]
+Out[48]: 
+array([&#39;1&#39;, &#39;B&#39;],
+      dtype=&#39;|S21&#39;)
+
+In [49]: target[:,0]
+Out[49]: 
+array([&#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;, &#39;0&#39;, &#39;1&#39;, &#39;1&#39;, &#39;0&#39;],
+      dtype=&#39;|S21&#39;)
+
+In [50]: target[:,1]
+Out[50]: 
+array([&#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;, &#39;A&#39;, &#39;B&#39;, &#39;B&#39;, &#39;A&#39;],
+      dtype=&#39;|S21&#39;)
+
+
+</code></pre>
 
 
 		</div>
@@ -130,7 +177,7 @@ plt.show()
 	</article>
   
 	<div class="pagination">
-	
+	 <a class="prev" href="Python进阶_2.html">&larr; Older</a> 
 <a href="archives.html">Blog Archives</a>
 	 <a class="next" href="Python进阶.html">Newer &rarr;</a>  
 	    
@@ -143,7 +190,7 @@ plt.show()
 	  <ul id="recent_posts">
 	  
 	      <li class="post">
-	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(2)</strong></a>
+	        <a href="Python%E8%BF%9B%E9%98%B6.html"><strong>Python进阶&nbsp;(4)</strong></a>
 	        
 	        
 	        
@@ -171,7 +218,19 @@ plt.show()
 	  
 	      
 		      <li class="post">
-		        <a href="15004362772943.html">神经网络入门</a>
+		        <a href="15006447870145.html">Python字符串操作笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15005564120900.html">Numpy 入门笔记（一）</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="15004362772943.html">卷积神经网络入门</a>
 		      </li>
 	     
 	  
@@ -188,16 +247,8 @@ plt.show()
 	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581969251.html">Opencv</a>
-		      </li>
-	     
 	  
 	      
-		      <li class="post">
-		        <a href="14997581396138.html">numpy常见函数</a>
-		      </li>
-	     
 	  
 	      
 	  
